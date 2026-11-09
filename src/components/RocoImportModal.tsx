@@ -747,7 +747,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         gameGid,
         isShiny: mutation.isShiny,
         isColorful: mutation.isColorful,
-        mutationVerified: mutation.source !== "unknown" && !mutation.hasConflict,
+        mutationVerified: mutation.isShiny !== undefined && !mutation.hasConflict,
         mutationConflict: mutation.hasConflict,
         selected: !isDuplicate, // 重复的默认不勾选，不重复的默认勾选
         isDuplicate,
