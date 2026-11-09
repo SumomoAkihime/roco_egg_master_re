@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { ParentPet, cleanNature, STATS_OPTIONS } from "../types";
 import { decodePetMutation } from "../petMutation";
+import { resolvePetNameByConfig, catalogDexId, importedPetGid } from "../petImportIdentity";
 import { assignLocalBoxPositions, mapLocalBoxPositions } from "../localHelperApi";
 import {
   getPetDetails,
@@ -318,41 +319,23 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
   // 自适应字段猜测解析单只宠物
   const parseSinglePet = (item: any, index: number, existingSet: Set<string>): ParsedPet | null => {
     try {
-      // 1. 优先使用 conf_id 和 base_conf_id 在 gameIdToName 权威映射底表里高精度反查真实品种/形态全称 (免疫改名)
-      let rawName = "";
+      // base_conf_id 标识当前形态，conf_id 标识原始家族；优先识别当前形态。
+      // 不能拿游戏配置 ID 去匹配图鉴序号——两者不是同一个命名空间。
+      let rawName = resolvePetNameByConfig(item, gameIdToName as Record<string, string>) || "";
       const confIdVal = item.conf_id !== undefined ? parseInt(String(item.conf_id)) : null;
       const baseConfIdVal = item.base_conf_id !== undefined ? parseInt(String(item.base_conf_id)) : null;
-      const rawId = item.base_conf_id !== undefined ? item.base_conf_id : (item.pet_id !== undefined ? item.pet_id : (item.id !== undefined ? item.id : item.sprite_id));
-
-      if (confIdVal && (gameIdToName as any)[confIdVal]) {
-        rawName = (gameIdToName as any)[confIdVal];
-      } else if (baseConfIdVal && (gameIdToName as any)[baseConfIdVal]) {
-        rawName = (gameIdToName as any)[baseConfIdVal];
-      }
-
-      // 如果查映射表没查到，才尝试使用 ID 在本地 petsData 顺序 ID 中反查
-      if (!rawName) {
-        if (rawId !== undefined) {
-          const idNum = parseInt(String(rawId));
-          const foundPet = petsData.find((p: any) => p.id === idNum);
-          if (foundPet) {
-            rawName = foundPet.name;
-          } else {
-            // 查找 forms
-            for (const p of petsData) {
-              const f = p.forms.find((form: any) => form.id === idNum);
-              if (f) {
-                rawName = f.name;
-                break;
-              }
-            }
-          }
-        }
+      const rawId = baseConfIdVal ?? confIdVal ?? null;
+      const dexId = catalogDexId(item);
+      if (!rawName && dexId !== undefined) {
+        const foundPet = petsData.find((p: any) => p.id === dexId);
+        if (foundPet) rawName = foundPet.name;
       }
 
       // 如果通过 ID 没查到，再使用名字字段解码兜底
       if (!rawName) {
-        if (typeof item.name === "string" && item.name) {
+        if (typeof item.species === "string" && item.species) {
+          rawName = item.species;
+        } else if (typeof item.name === "string" && item.name) {
           rawName = decodeBase64Name(item.name);
         } else if (typeof item.sprite === "string" && item.sprite) {
           rawName = decodeBase64Name(item.sprite);
@@ -747,7 +730,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
 
       // 8. 判定是否与本地已存在的数据完全重复 (使用 Set 实现 O(1) 匹配，避免 N*M 复杂度的 JSON.stringify 与 sort 重绘假死)
       const sortedStats = [...stats].sort().join(',');
-      const gameGid = item.gid !== undefined && item.gid !== null ? String(item.gid) : undefined;
+      const gameGid = importedPetGid(item);
       const key = `${rawName}|${gender}|${nature}|${brand}|${sortedStats}`;
       const isDuplicate = gameGid ? existingSet.has(`gid:${gameGid}`) : existingSet.has(key);
       // 基于 PetData.mutation_type 的明确位标志，异色与炫彩分开解析。
