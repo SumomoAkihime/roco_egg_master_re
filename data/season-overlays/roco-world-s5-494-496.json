@@ -14,7 +14,13 @@
     "min_number": 494,
     "max_number": 496,
     "record_count": 3,
-    "form_count": 3
+    "form_count": 3,
+    "game_id_mapping_sources": [
+      "https://lkmerchant.online/pets/3797-xiaominglong/",
+      "https://lkmerchant.online/pets/3806-awasha/",
+      "https://lkmerchant.online/pets/3822-daidailing/"
+    ],
+    "game_id_mapping_warning": "游戏配置 ID 来自公开图鉴页面 URL；未单独核对的连续编号属于推定映射，需 S5 真实封包验证"
   },
   "records": [
     {
@@ -73,9 +79,10 @@
         "萌",
         "草"
       ],
-      "source_game_id": null,
+      "source_game_id": 3822,
       "source_release_date": null,
-      "source_note": "Roco.world #494–496 and lkmerchant egg groups; six-column ordering crosschecked with #493 WIKI"
+      "source_note": "Roco.world #494–496 and lkmerchant egg groups; six-column ordering crosschecked with #493 WIKI",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 495,
@@ -133,9 +140,10 @@
         "萌",
         "草"
       ],
-      "source_game_id": null,
+      "source_game_id": 3823,
       "source_release_date": null,
-      "source_note": "Roco.world #494–496 and lkmerchant egg groups; six-column ordering crosschecked with #493 WIKI"
+      "source_note": "Roco.world #494–496 and lkmerchant egg groups; six-column ordering crosschecked with #493 WIKI",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 496,
@@ -193,10 +201,15 @@
         "萌",
         "草"
       ],
-      "source_game_id": null,
+      "source_game_id": 3824,
       "source_release_date": null,
-      "source_note": "Roco.world #494–496 and lkmerchant egg groups; six-column ordering crosschecked with #493 WIKI"
+      "source_note": "Roco.world #494–496 and lkmerchant egg groups; six-column ordering crosschecked with #493 WIKI",
+      "source_game_id_confidence": "crosschecked URL"
     }
   ],
-  "game_id_to_name": {}
+  "game_id_to_name": {
+    "3822": "呆呆铃",
+    "3823": "跳跳铃",
+    "3824": "铃兰夫人"
+  }
 }
