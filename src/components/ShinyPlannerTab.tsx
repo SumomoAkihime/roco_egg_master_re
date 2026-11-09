@@ -24,7 +24,7 @@ export const ShinyPlannerTab: React.FC<Props> = ({ parents, onUpdate }) => {
       <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 space-y-2">
         <h2 className="font-bold text-xl">✨ 异色排窝（本地预览版）</h2>
         <p className="text-sm text-slate-500">当前已导入 {parents.length} 只父母本，已确认异色 {shinyCount} 只。仅使用本地仓库数据计算，不上传任何精灵信息。</p>
-        <p className="text-xs text-amber-600 dark:text-amber-400">请先核对异色标记：当前抓包协议的异色字段尚未经过 S5 实测。只识别明确的布尔字段；其他精灵需手动标记。规划仅为蛋组可达性参考，不能保证遗传概率、实际窝点效果和跨代产出。</p>
+        <p className="text-xs text-amber-600 dark:text-amber-400">请先核对异色标记：当前抓包协议的异色字段尚未经过 S5 实测。已支持 mutation_type 第0位异色、第3位炫彩，以及显式布尔标记；缺失或冲突的字段需人工核对。规划仅为蛋组可达性参考，不能保证遗传概率、实际窝点效果和跨代产出。</p>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <section className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 space-y-3">
@@ -39,6 +39,8 @@ export const ShinyPlannerTab: React.FC<Props> = ({ parents, onUpdate }) => {
                 <input type="checkbox" checked={!!p.isShiny} onChange={e => onUpdate(p.id, e.target.checked)} />
                 <span className="text-sm font-semibold flex-1">{p.sprite}</span>
                 <span className="text-xs text-slate-500">{p.gender} {p.position || ""}</span>
+                {p.isColorful && <span className="text-[10px] font-semibold text-violet-500">炫彩</span>}
+                {!p.mutationVerified && <span className="text-[10px] text-amber-500">待核对</span>}
               </label>
             ))}
             {!visible.length && <p className="text-sm text-slate-500">没有可显示的精灵。可点击「查看全部」标记已有异色。</p>}
