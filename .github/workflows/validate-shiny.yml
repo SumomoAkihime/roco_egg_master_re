@@ -54,3 +54,21 @@ jobs:
           if-no-files-found: ignore
       - name: Vite production build
         run: npm run build
+
+  windows-smoke:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Windows type checking
+        run: npm run lint
+      - name: Windows unit tests
+        run: npm run test:shiny
+      - name: Windows production Vite build
+        run: npm run build
