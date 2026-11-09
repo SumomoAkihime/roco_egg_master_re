@@ -1381,11 +1381,11 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
                                   )}
                                 </div>
                                 <span className="truncate" title={pet.sprite}>{pet.sprite}</span>
-                                {!pet.catalogMatched && <span title="当前 S5 图鉴缺少对应名称/形态；默认不选中以避免错误配对" className="text-[9px] font-bold text-rose-500 whitespace-nowrap">图鉴待匹配</span>
+                                {!pet.catalogMatched && <span title="当前 S5 图鉴缺少对应名称/形态；默认不选中以避免错误配对" className="text-[9px] font-bold text-rose-500 whitespace-nowrap">图鉴待匹配</span>}
                                 {pet.isShiny && <span className="text-[9px] text-amber-600 font-bold whitespace-nowrap">✨异色</span>}
                                 {pet.isColorful && <span className="text-[9px] text-violet-500 font-bold whitespace-nowrap">炫彩</span>}
                                 {pet.mutationConflict && <span title="抓包外观字段不一致，请人工核对" className="text-[9px] text-red-500 whitespace-nowrap">字段冲突</span>}
-                                {!pet.mutationVerified && !pet.mutationConflict && <span title="封包未提供明确异色标志" className="text-[9px] text-slate-400 whitespace-nowrap">外观待确认</span>
+                                {!pet.mutationVerified && !pet.mutationConflict && <span title="封包未提供明确异色标志" className="text-[9px] text-slate-400 whitespace-nowrap">外观待确认</span>}
                               </div>
                             </td>
 
