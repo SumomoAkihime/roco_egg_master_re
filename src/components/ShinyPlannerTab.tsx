@@ -88,6 +88,7 @@ export const ShinyPlannerTab: React.FC<Props> = ({ parents, onUpdate }) => {
           <div key={route.target} className="rounded-lg border border-slate-200 dark:border-slate-700 p-3 text-sm space-y-1">
             <strong>{route.target}</strong>
             <div>{route.status === "owned" ? "已拥有异色" : route.status === "unknown" ? "缺少图鉴 / 蛋组数据" : route.status === "unreachable" ? "未在搜索范围内找到理论路径（不代表绝对无法孵化）" : route.species.join(" → ")}</div>
+            {route.requiresMaleOffspring && <p className="text-amber-600">该路径从异色母体出发，需先取得同种异色公体；还需准备同组公本，实际产出概率尚未验证。</p>}
             {route.missingMothers.length > 0 && <p className="text-amber-600">尚未在已导入仓库中找到对应母本：{route.missingMothers.join("、")}</p>}
           </div>
         ))}
