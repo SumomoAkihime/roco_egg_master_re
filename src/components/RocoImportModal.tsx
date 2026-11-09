@@ -784,6 +784,17 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       const parsed = parseSinglePet(item, index, existingSet);
       if (parsed) {
         results.push(parsed);
+        // De-duplicate repeated pages/box snapshots in the CURRENT import batch
+        // as well as against previously saved parents. Two distinct GIDs with
+        // identical stats are still two separate pets.
+        if (!parsed.isDuplicate) {
+          if (parsed.gameGid) {
+            existingSet.add(`gid:${parsed.gameGid}`);
+          } else {
+            const statKey = [...parsed.stats].sort().join(",");
+            existingSet.add(`${parsed.sprite}|${parsed.gender}|${parsed.nature}|${parsed.brand}|${statKey}`);
+          }
+        }
       }
     });
 
