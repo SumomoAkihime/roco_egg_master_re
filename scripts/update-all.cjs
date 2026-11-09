@@ -255,7 +255,7 @@ function generateGameIdToName() {
 
   for (const { file, overlay } of loadSeasonOverlays()) {
     for (const [gameId, name] of Object.entries(overlay.game_id_to_name || {})) {
-      if (!/^\\d+$/.test(gameId) || typeof name !== 'string' || !name.trim()) {
+      if (!/^\d+$/.test(gameId) || typeof name !== 'string' || !name.trim()) {
         throw new Error('无效的游戏 ID 映射: ' + file);
       }
       if (mapping[gameId] && mapping[gameId] !== name) {
