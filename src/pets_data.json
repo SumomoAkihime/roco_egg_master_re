@@ -24081,10 +24081,11 @@
       "普通",
       "萌"
     ],
-    "source_game_id": 3809,
+    "source_game_id": null,
     "source_release_date": null,
     "source_note": "Bwiki S5",
-    "source_game_id_confidence": "sequential mapping, requires in-game verification"
+    "source_game_id_confidence": "unverified-sequential-candidate",
+    "source_game_id_candidate": 3809
   },
   {
     "id": 481,
@@ -24437,10 +24438,11 @@
     "types": [
       "冰"
     ],
-    "source_game_id": 3815,
+    "source_game_id": null,
     "source_release_date": null,
     "source_note": "Bwiki S5",
-    "source_game_id_confidence": "sequential mapping, requires in-game verification"
+    "source_game_id_confidence": "unverified-sequential-candidate",
+    "source_game_id_candidate": 3815
   },
   {
     "id": 487,
@@ -24615,10 +24617,11 @@
     "types": [
       "幽"
     ],
-    "source_game_id": 3818,
+    "source_game_id": null,
     "source_release_date": null,
     "source_note": "Bwiki S5",
-    "source_game_id_confidence": "sequential mapping, requires in-game verification"
+    "source_game_id_confidence": "unverified-sequential-candidate",
+    "source_game_id_candidate": 3818
   },
   {
     "id": 490,
