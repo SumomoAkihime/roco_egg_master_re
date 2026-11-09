@@ -1,0 +1,36 @@
+name: Validate S5 Shiny Planner Preview
+
+on:
+  pull_request:
+    paths:
+      - "src/**"
+      - "scripts/**"
+      - "tests/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/validate-shiny.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install project dependencies (no install scripts)
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Type check
+        run: npm run lint
+      - name: Unit tests
+        run: npm run test:shiny
+      - name: Validate catalog dry-run script
+        run: node --check scripts/import-season-data.cjs
+      - name: Vite production build
+        run: npm run build
