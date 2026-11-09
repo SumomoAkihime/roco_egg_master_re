@@ -89,6 +89,16 @@ node scripts/fetch-public-catalog.cjs
 - **来源可信度**：S5 480、486、489 的配置编号只保留候选字段，不参与自动品种匹配。未能匹配到本地图鉴的精灵会显示“图鉴待匹配”，默认不勾选。
 - **异色状态**：未知与“已确认普通”不同；修改手动异色状态时记录人工核对标记。
 
+## 自动化验证（2026-11-10）
+
+GitHub Actions 工作流 `Validate S5 Shiny Planner Preview` 在 [Run #42658402699](https://github.com/SumomoAkihime/roco_egg_master_re/actions/runs/42658402699) 上验证成功：
+
+- **Ubuntu**：TypeScript 类型检查、32 项异色/仓库导入单测、3 项 Lua 导入解析测试、4 项 S5 数据一致性测试、Vite 生产构建全部通过。
+- **Windows**：类型检查、32 项异色/仓库单测及 Vite 生产构建全部通过。
+- **实时 WIKI 抓取是非阻塞建议步骤**：当前接口 Lua 源仅含 467 及以上的 2 条记录，未满足 S5 特征门槛，脚本主动拒绝写入，确保不覆盖已经核实的基础图鉴。
+
+这些 CI 测试并不等同于 Windows GUI/本机 helper 实测、实际抓包成功或 `electron-builder` 生成的便携 EXE 已验收。
+
 ## 当前算法限制
 
 - 只用共同蛋组、现有已标记异色个体和性别生成**候选**配对。
