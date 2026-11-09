@@ -333,36 +333,27 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         if (foundPet) rawName = foundPet.name;
       }
 
-      // 如果通过 ID 没查到，再使用名字字段解码兜底
-      if (!rawName) {
-        if (typeof item.species === "string" && item.species) {
-          rawName = item.species;
-        } else if (typeof item.name === "string" && item.name) {
-          rawName = decodeBase64Name(item.name);
-        } else if (typeof item.sprite === "string" && item.sprite) {
-          rawName = decodeBase64Name(item.sprite);
-        } else if (typeof item.pet_name === "string" && item.pet_name) {
-          rawName = decodeBase64Name(item.pet_name);
-        } else if (typeof item.displayName === "string" && item.displayName) {
-          rawName = decodeBase64Name(item.displayName);
+      // PetData.name 可能是玩家自定义昵称，不能在有游戏配置 ID 但
+      // 当前映射尚未核实时，拿昵称冒充精灵物种名。
+      const hasConfigIds = item.base_conf_id !== undefined || item.conf_id !== undefined ||
+        item.baseConfId !== undefined || item.confId !== undefined;
+      const canonicalSpecies = [item.species, item.species_name, item.speciesName, item.sprite]
+        .find(value => typeof value === "string" && value.trim());
+      if (!rawName && typeof canonicalSpecies === "string") rawName = decodeBase64Name(canonicalSpecies);
+      if (!rawName && !hasConfigIds) {
+        const manualName = [item.pet_name, item.displayName, item.name]
+          .find(value => typeof value === "string" && value.trim());
+        if (typeof manualName === "string") rawName = decodeBase64Name(manualName);
+      }
+
+      // 当前形态标识应该来自被验证的配置映射或明确的物种/形态字段，
+      // 不得从玩家昵称里的括号文字猜测形态。
+      let rawOriginalName = rawName;
+      if (typeof canonicalSpecies === "string" && canonicalSpecies) {
+        const canonical = decodeBase64Name(canonicalSpecies);
+        if (canonical.includes("（") || canonical.includes("(") || canonical.includes("_")) {
+          rawOriginalName = canonical;
         }
-      }
-
-      // 获取 item 中可能存在的带形态的原始名字
-      let rawOriginalName = "";
-      if (typeof item.name === "string" && item.name) {
-        rawOriginalName = decodeBase64Name(item.name);
-      } else if (typeof item.sprite === "string" && item.sprite) {
-        rawOriginalName = decodeBase64Name(item.sprite);
-      } else if (typeof item.pet_name === "string" && item.pet_name) {
-        rawOriginalName = decodeBase64Name(item.pet_name);
-      } else if (typeof item.displayName === "string" && item.displayName) {
-        rawOriginalName = decodeBase64Name(item.displayName);
-      }
-
-      // 如果反查出了带形态的品种名称，则直接用来作为 rawOriginalName 以提取形态后缀
-      if (rawName && (rawName.includes("（") || rawName.includes("("))) {
-        rawOriginalName = rawName;
       }
 
       // 提取原始名称中可能的形态信息 (如 "古钟蛇（本来的样子）" -> "本来的样子")
