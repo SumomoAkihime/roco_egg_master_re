@@ -17,3 +17,4 @@ scratch/
 抓取数据/
 *.code-workspace
 backup/
+\n# Manually reviewed public catalog snapshots, not authoritative game data\ndata-candidates/\ndatabase-backups/\n
