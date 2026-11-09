@@ -1086,7 +1086,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
             </div>
             <div>
               <h3 className="text-base font-bold text-slate-800 dark:text-slate-100">导入《洛克王国：世界》精灵盒子</h3>
-              <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">免网卡抓包，一键同步本地盒子精灵父母本</p>
+              <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">支持本机助手 API 或 SQLite 读取，导入前请核对精灵信息</p>
             </div>
           </div>
           <button
