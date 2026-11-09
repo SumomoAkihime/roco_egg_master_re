@@ -35,5 +35,16 @@ jobs:
         run: |\n          node --check scripts/import-season-data.cjs\n          node --check scripts/fetch-public-catalog.cjs
           node --check scripts/review-catalog-snapshot.cjs
           node --check electron/main.cjs
+      - name: Test WIKI S5 parser and freshness gate
+        run: node --test tests/importLiveWiki.test.cjs
+      - name: Probe current WIKI S5 source (advisory only)
+        continue-on-error: true
+        run: node scripts/import-live-wiki.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: s5-wiki-preview
+          path: data-candidates/s5-wiki-overlay.preview.json
+          if-no-files-found: ignore
       - name: Vite production build
         run: npm run build
