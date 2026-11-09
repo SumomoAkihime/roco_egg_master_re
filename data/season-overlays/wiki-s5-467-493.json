@@ -10,7 +10,13 @@
     "min_number": 467,
     "max_number": 493,
     "record_count": 27,
-    "form_count": 29
+    "form_count": 29,
+    "game_id_mapping_sources": [
+      "https://lkmerchant.online/pets/3797-xiaominglong/",
+      "https://lkmerchant.online/pets/3806-awasha/",
+      "https://lkmerchant.online/pets/3822-daidailing/"
+    ],
+    "game_id_mapping_warning": "游戏配置 ID 来自公开图鉴页面 URL；未单独核对的连续编号属于推定映射，需 S5 真实封包验证"
   },
   "records": [
     {
@@ -60,9 +66,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3784,
       "source_release_date": null,
-      "source_note": "WIKI listed pre-S5 companion species"
+      "source_note": "WIKI listed pre-S5 companion species",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 468,
@@ -111,9 +118,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3785,
       "source_release_date": null,
-      "source_note": "WIKI listed pre-S5 companion species"
+      "source_note": "WIKI listed pre-S5 companion species",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 469,
@@ -159,9 +167,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3797,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 470,
@@ -207,9 +216,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3798,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 471,
@@ -256,9 +266,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3799,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 472,
@@ -305,9 +316,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3800,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 473,
@@ -354,9 +366,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3801,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 474,
@@ -403,9 +416,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3802,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 475,
@@ -452,9 +466,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3803,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 476,
@@ -501,9 +516,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3804,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 477,
@@ -552,9 +568,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3805,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 478,
@@ -628,9 +645,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3806,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 479,
@@ -681,9 +699,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3808,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 480,
@@ -734,9 +753,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3809,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "sequential mapping, requires in-game verification"
     },
     {
       "id": 481,
@@ -787,9 +807,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3810,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 482,
@@ -840,9 +861,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3811,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 483,
@@ -893,9 +915,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3812,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 484,
@@ -946,9 +969,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3813,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 485,
@@ -999,9 +1023,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3814,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 486,
@@ -1052,9 +1077,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3815,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "sequential mapping, requires in-game verification"
     },
     {
       "id": 487,
@@ -1105,9 +1131,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3816,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 488,
@@ -1158,9 +1185,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3817,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 489,
@@ -1211,9 +1239,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3818,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "sequential mapping, requires in-game verification"
     },
     {
       "id": 490,
@@ -1264,9 +1293,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3819,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 491,
@@ -1315,9 +1345,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3820,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 492,
@@ -1366,9 +1397,10 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3821,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     },
     {
       "id": 493,
@@ -1436,10 +1468,40 @@
         }
       ],
       "types": [],
-      "source_game_id": null,
+      "source_game_id": 3168,
       "source_release_date": null,
-      "source_note": "Bwiki S5"
+      "source_note": "Bwiki S5",
+      "source_game_id_confidence": "crosschecked URL"
     }
   ],
-  "game_id_to_name": {}
+  "game_id_to_name": {
+    "3168": "阿布",
+    "3784": "云梦豚",
+    "3785": "长江豚",
+    "3797": "小冥龙",
+    "3798": "冥古龙",
+    "3799": "地银链",
+    "3800": "地底银鳞",
+    "3801": "地绡银龙",
+    "3802": "沉金兽",
+    "3803": "龙头金",
+    "3804": "龙嵴金脉",
+    "3805": "乐乐鲨",
+    "3806": "阿瓦鲨_柠檬鲨的样子",
+    "3807": "阿瓦鲨_虎纹鲨的样子",
+    "3808": "蛋包蛋",
+    "3809": "鸡麻麻",
+    "3810": "蟹蟹椰",
+    "3811": "沙咔蟹",
+    "3812": "鲸羽",
+    "3813": "圆环鲸羽",
+    "3814": "豆粒鹅",
+    "3815": "刨雪鹅",
+    "3816": "西瓜虫",
+    "3817": "冬虫夏瓜",
+    "3818": "小剪影",
+    "3819": "影子剪纸",
+    "3820": "滴溜豚",
+    "3821": "滴廿豚"
+  }
 }
