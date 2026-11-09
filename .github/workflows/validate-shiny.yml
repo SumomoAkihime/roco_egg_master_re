@@ -33,8 +33,11 @@ jobs:
       - name: Unit tests
         run: npm run test:shiny
       - name: Validate catalog dry-run script
-        run: |\n          node --check scripts/import-season-data.cjs\n          node --check scripts/fetch-public-catalog.cjs
+        run: |
+          node --check scripts/import-season-data.cjs
+          node --check scripts/fetch-public-catalog.cjs
           node --check scripts/review-catalog-snapshot.cjs
+          node --check scripts/import-live-wiki.cjs
           node --check electron/main.cjs
       - name: Test WIKI S5 parser and freshness gate
         run: node --test tests/importLiveWiki.test.cjs
