@@ -36,7 +36,7 @@ if (source && source.season && source.season !== season) fail("文件中的赛�
 const allowedGroups = new Set([
  "两栖组","动物组","大地组","天空组","妖精组","巨灵组","拟人组",
  "昆虫组","机械组","植物组","海洋组","软体组","魔力组","龙组",
- "岩石组","飞龙组","无法孵蛋"
+ "飞龙组","无法孵蛋"
 ]);
 function validate(record, index) {
   if (!record || typeof record !== "object" || Array.isArray(record)) fail(`第 ${index+1} 条不是对象`);
@@ -69,6 +69,23 @@ for (const filename of fs.readdirSync(databaseDir).filter(f => f.endsWith(".json
   if (record && Number.isSafeInteger(record.id)) {
     if (existing.has(record.id)) fail(`旧图鉴重复 ID ${record.id}: ${filename}`);
     existing.set(record.id, { filepath, record });
+  }
+}
+// 仓库使用的主 ID 属于图鉴条目，不得直接使用 Wiki 的 3001 等游戏配置 ID。
+// 若一个名字在旧数据库已有其它 ID，阻止误导入为重复精灵。
+const existingByName = new Map();
+for (const { record } of existing.values()) {
+  const key = String(record.name || "").trim();
+  if (key) {
+    const prior = existingByName.get(key);
+    if (prior !== undefined && prior !== record.id) fail(`旧图鉴存在同名不同 ID: ${key} (${prior}, ${record.id})`);
+    existingByName.set(key, record.id);
+  }
+}
+for (const p of all) {
+  const otherId = existingByName.get(p.name.trim());
+  if (otherId !== undefined && otherId !== p.id) {
+    fail(`精灵 ${p.name} 在本地已使用图鉴 ID ${otherId}，输入 ID ${p.id} 冲突；请先核对游戏配置 ID 与图鉴 ID 的区别`);
   }
 }
 const changes = [];
