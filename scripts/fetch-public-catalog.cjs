@@ -36,7 +36,9 @@ async function getPage(pageNo) {
 }
 function identity(record) {
   const id = record.pet_id ?? record.id ?? record.config_id ?? record.conf_id;
-  return id === undefined ? JSON.stringify(record) : String(id);
+  const form = record.form_id ?? record.form ?? record.form_name ?? "";
+  const name = record.name ?? record.pet_name ?? "";
+  return id === undefined ? JSON.stringify(record) : `${id}:${form}:${name}`;
 }
 async function main() {
   const items = [];
@@ -44,13 +46,18 @@ async function main() {
   const sources = [];
   let stale = false;
   let updatedAt = null;
+  let oldestUpdatedAt = null;
+  let missingUpdateDate = false;
   let pages = 0;
   for (let page = 1; page <= MAX_PAGES; page++) {
     const data = await getPage(page);
     pages++;
     sources.push(data.source || endpoint);
     if (data.stale === true) stale = true;
-    if (typeof data.updated_at === "string" && (!updatedAt || data.updated_at > updatedAt)) updatedAt = data.updated_at;
+    if (typeof data.updated_at === "string") {
+      if (!updatedAt || data.updated_at > updatedAt) updatedAt = data.updated_at;
+      if (!oldestUpdatedAt || data.updated_at < oldestUpdatedAt) oldestUpdatedAt = data.updated_at;
+    } else { missingUpdateDate = true; }
     for (const item of data.items) {
       if (!item || typeof item !== "object" || Array.isArray(item)) continue;
       const id = identity(item);
@@ -64,12 +71,13 @@ async function main() {
   }
   if (pages >= MAX_PAGES) fail("Reached maximum pages; pagination may be unstable. No data saved.");
   if (!items.length) fail("Empty public catalog; no data saved.");
-  const recentEnough = !!updatedAt && Date.parse(updatedAt) >= s5Start;
+  const recentEnough = !missingUpdateDate && !!oldestUpdatedAt && Date.parse(oldestUpdatedAt) >= s5Start;
   const output = {
     type: "unverified-public-catalog-snapshot",
     source: endpoint,
     fetched_at: new Date().toISOString(),
     source_updated_at: updatedAt,
+    oldest_page_updated_at: oldestUpdatedAt,
     source_stale: stale,
     s5_freshness_gate: recentEnough && !stale ? "recent-but-unverified" : "not-s5-verified",
     items_count: items.length,
@@ -84,6 +92,7 @@ async function main() {
   console.log(JSON.stringify({
     path: filename,
     source_updated_at: updatedAt,
+    oldest_page_updated_at: oldestUpdatedAt,
     items_count: items.length,
     pages,
     s5_freshness_gate: output.s5_freshness_gate,
