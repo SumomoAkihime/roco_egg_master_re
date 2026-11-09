@@ -23280,5 +23280,1612 @@
     "source_pet_key": "pet_000622",
     "source_game_id": 3796,
     "source_release_date": "2026-09-10"
+  },
+  {
+    "id": 467,
+    "name": "云梦豚",
+    "filename": "467-云梦豚.png",
+    "egg_data": {
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "云梦豚",
+      "长江豚"
+    ],
+    "forms": [
+      {
+        "id": 467,
+        "name": "云梦豚",
+        "egg_groups": [
+          "海洋组"
+        ],
+        "height_min": 0.34,
+        "height_max": 0.51,
+        "weight_min": 14,
+        "weight_max": 28,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 480,
+          "stats": {
+            "hp": 77,
+            "speed": 84,
+            "atk": 37,
+            "def": 87,
+            "sp_atk": 101,
+            "sp_def": 94
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "WIKI listed pre-S5 companion species"
+  },
+  {
+    "id": 468,
+    "name": "长江豚",
+    "filename": "468-长江豚.png",
+    "egg_data": {
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "云梦豚",
+      "长江豚"
+    ],
+    "forms": [
+      {
+        "id": 468,
+        "name": "长江豚",
+        "egg_groups": [
+          "海洋组"
+        ],
+        "height_min": 1.34,
+        "height_max": 1.76,
+        "weight_min": 59,
+        "weight_max": 101,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 599,
+          "stats": {
+            "hp": 96,
+            "speed": 105,
+            "atk": 46,
+            "def": 109,
+            "sp_atk": 126,
+            "sp_def": 117
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "WIKI listed pre-S5 companion species"
+  },
+  {
+    "id": 469,
+    "name": "小冥龙",
+    "filename": "469-小冥龙.png",
+    "egg_data": {
+      "egg_groups": [],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null,
+      "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
+    },
+    "evolution_chain": [
+      "小冥龙",
+      "冥古龙"
+    ],
+    "forms": [
+      {
+        "id": 469,
+        "name": "小冥龙",
+        "egg_groups": [],
+        "height_min": 0.7,
+        "height_max": 0.92,
+        "weight_min": 31,
+        "weight_max": 66,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 402,
+          "stats": {
+            "hp": 94,
+            "speed": 56,
+            "atk": 102,
+            "def": 65,
+            "sp_atk": 34,
+            "sp_def": 51
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 470,
+    "name": "冥古龙",
+    "filename": "470-冥古龙.png",
+    "egg_data": {
+      "egg_groups": [],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null,
+      "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
+    },
+    "evolution_chain": [
+      "小冥龙",
+      "冥古龙"
+    ],
+    "forms": [
+      {
+        "id": 470,
+        "name": "冥古龙",
+        "egg_groups": [],
+        "height_min": 2.2,
+        "height_max": 2.8,
+        "weight_min": 243,
+        "weight_max": 440,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 502,
+          "stats": {
+            "hp": 118,
+            "speed": 70,
+            "atk": 128,
+            "def": 81,
+            "sp_atk": 42,
+            "sp_def": 63
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 471,
+    "name": "地银链",
+    "filename": "471-地银链.png",
+    "egg_data": {
+      "egg_groups": [],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null,
+      "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
+    },
+    "evolution_chain": [
+      "地银链",
+      "地底银鳞",
+      "地绡银龙"
+    ],
+    "forms": [
+      {
+        "id": 471,
+        "name": "地银链",
+        "egg_groups": [],
+        "height_min": 0.15,
+        "height_max": 0.33,
+        "weight_min": 1.5,
+        "weight_max": 3.3,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 359,
+          "stats": {
+            "hp": 60,
+            "speed": 72,
+            "atk": 32,
+            "def": 49,
+            "sp_atk": 74,
+            "sp_def": 72
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 472,
+    "name": "地底银鳞",
+    "filename": "472-地底银鳞.png",
+    "egg_data": {
+      "egg_groups": [],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null,
+      "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
+    },
+    "evolution_chain": [
+      "地银链",
+      "地底银鳞",
+      "地绡银龙"
+    ],
+    "forms": [
+      {
+        "id": 472,
+        "name": "地底银鳞",
+        "egg_groups": [],
+        "height_min": 0.97,
+        "height_max": 1.65,
+        "weight_min": 65,
+        "weight_max": 105,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 478,
+          "stats": {
+            "hp": 80,
+            "speed": 96,
+            "atk": 42,
+            "def": 66,
+            "sp_atk": 98,
+            "sp_def": 96
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 473,
+    "name": "地绡银龙",
+    "filename": "473-地绡银龙.png",
+    "egg_data": {
+      "egg_groups": [],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null,
+      "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
+    },
+    "evolution_chain": [
+      "地银链",
+      "地底银鳞",
+      "地绡银龙"
+    ],
+    "forms": [
+      {
+        "id": 473,
+        "name": "地绡银龙",
+        "egg_groups": [],
+        "height_min": 2.1,
+        "height_max": 4.3,
+        "weight_min": 340,
+        "weight_max": 770,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 598,
+          "stats": {
+            "hp": 100,
+            "speed": 120,
+            "atk": 53,
+            "def": 82,
+            "sp_atk": 123,
+            "sp_def": 120
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 474,
+    "name": "沉金兽",
+    "filename": "474-沉金兽.png",
+    "egg_data": {
+      "egg_groups": [],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null,
+      "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
+    },
+    "evolution_chain": [
+      "沉金兽",
+      "龙头金",
+      "龙嵴金脉"
+    ],
+    "forms": [
+      {
+        "id": 474,
+        "name": "沉金兽",
+        "egg_groups": [],
+        "height_min": 0.55,
+        "height_max": 0.7,
+        "weight_min": 3.5,
+        "weight_max": 6,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 378,
+          "stats": {
+            "hp": 87,
+            "speed": 48,
+            "atk": 79,
+            "def": 76,
+            "sp_atk": 35,
+            "sp_def": 53
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 475,
+    "name": "龙头金",
+    "filename": "475-龙头金.png",
+    "egg_data": {
+      "egg_groups": [],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null,
+      "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
+    },
+    "evolution_chain": [
+      "沉金兽",
+      "龙头金",
+      "龙嵴金脉"
+    ],
+    "forms": [
+      {
+        "id": 475,
+        "name": "龙头金",
+        "egg_groups": [],
+        "height_min": 0.95,
+        "height_max": 1.43,
+        "weight_min": 97,
+        "weight_max": 164,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 503,
+          "stats": {
+            "hp": 116,
+            "speed": 64,
+            "atk": 105,
+            "def": 102,
+            "sp_atk": 46,
+            "sp_def": 70
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 476,
+    "name": "龙嵴金脉",
+    "filename": "476-龙嵴金脉.png",
+    "egg_data": {
+      "egg_groups": [],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null,
+      "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
+    },
+    "evolution_chain": [
+      "沉金兽",
+      "龙头金",
+      "龙嵴金脉"
+    ],
+    "forms": [
+      {
+        "id": 476,
+        "name": "龙嵴金脉",
+        "egg_groups": [],
+        "height_min": 2.1,
+        "height_max": 3.2,
+        "weight_min": 830,
+        "weight_max": 2000,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 629,
+          "stats": {
+            "hp": 145,
+            "speed": 80,
+            "atk": 131,
+            "def": 127,
+            "sp_atk": 58,
+            "sp_def": 88
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 477,
+    "name": "乐乐鲨",
+    "filename": "477-乐乐鲨.png",
+    "egg_data": {
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "乐乐鲨",
+      "阿瓦鲨"
+    ],
+    "forms": [
+      {
+        "id": 477,
+        "name": "乐乐鲨",
+        "egg_groups": [
+          "海洋组"
+        ],
+        "height_min": 0.12,
+        "height_max": 0.23,
+        "weight_min": 1,
+        "weight_max": 2.2,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 471,
+          "stats": {
+            "hp": 98,
+            "speed": 76,
+            "atk": 94,
+            "def": 96,
+            "sp_atk": 37,
+            "sp_def": 70
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 478,
+    "name": "阿瓦鲨",
+    "filename": "478-阿瓦鲨.png",
+    "egg_data": {
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "乐乐鲨",
+      "阿瓦鲨"
+    ],
+    "forms": [
+      {
+        "id": 478,
+        "name": "阿瓦鲨_柠檬鲨的样子",
+        "egg_groups": [
+          "海洋组"
+        ],
+        "height_min": 0.38,
+        "height_max": 0.65,
+        "weight_min": 9,
+        "weight_max": 15,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 589,
+          "stats": {
+            "hp": 123,
+            "speed": 95,
+            "atk": 117,
+            "def": 120,
+            "sp_atk": 46,
+            "sp_def": 88
+          }
+        }
+      },
+      {
+        "id": 478,
+        "name": "阿瓦鲨_虎纹鲨的样子",
+        "egg_groups": [
+          "海洋组"
+        ],
+        "height_min": 0.38,
+        "height_max": 0.65,
+        "weight_min": 9,
+        "weight_max": 13.6,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 596,
+          "stats": {
+            "hp": 90,
+            "speed": 95,
+            "atk": 146,
+            "def": 120,
+            "sp_atk": 57,
+            "sp_def": 88
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 479,
+    "name": "蛋包蛋",
+    "filename": "479-蛋包蛋.png",
+    "egg_data": {
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "蛋包蛋",
+      "鸡麻麻"
+    ],
+    "forms": [
+      {
+        "id": 479,
+        "name": "蛋包蛋",
+        "egg_groups": [
+          "动物组",
+          "天空组"
+        ],
+        "height_min": 0.26,
+        "height_max": 0.4,
+        "weight_min": 1.27,
+        "weight_max": 2.68,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 461,
+          "stats": {
+            "hp": 96,
+            "speed": 52,
+            "atk": 77,
+            "def": 91,
+            "sp_atk": 76,
+            "sp_def": 69
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 480,
+    "name": "鸡麻麻",
+    "filename": "480-鸡麻麻.png",
+    "egg_data": {
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "蛋包蛋",
+      "鸡麻麻"
+    ],
+    "forms": [
+      {
+        "id": 480,
+        "name": "鸡麻麻",
+        "egg_groups": [
+          "动物组",
+          "天空组"
+        ],
+        "height_min": 1.51,
+        "height_max": 2.06,
+        "weight_min": 70,
+        "weight_max": 117,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 575,
+          "stats": {
+            "hp": 120,
+            "speed": 65,
+            "atk": 96,
+            "def": 113,
+            "sp_atk": 95,
+            "sp_def": 86
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 481,
+    "name": "蟹蟹椰",
+    "filename": "481-蟹蟹椰.png",
+    "egg_data": {
+      "egg_groups": [
+        "妖精组",
+        "两栖组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "蟹蟹椰",
+      "沙咔蟹"
+    ],
+    "forms": [
+      {
+        "id": 481,
+        "name": "蟹蟹椰",
+        "egg_groups": [
+          "妖精组",
+          "两栖组"
+        ],
+        "height_min": 0.29,
+        "height_max": 0.41,
+        "weight_min": 0.6,
+        "weight_max": 1.4,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 512,
+          "stats": {
+            "hp": 108,
+            "speed": 68,
+            "atk": 102,
+            "def": 110,
+            "sp_atk": 43,
+            "sp_def": 81
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 482,
+    "name": "沙咔蟹",
+    "filename": "482-沙咔蟹.png",
+    "egg_data": {
+      "egg_groups": [
+        "妖精组",
+        "两栖组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "蟹蟹椰",
+      "沙咔蟹"
+    ],
+    "forms": [
+      {
+        "id": 482,
+        "name": "沙咔蟹",
+        "egg_groups": [
+          "妖精组",
+          "两栖组"
+        ],
+        "height_min": 1.32,
+        "height_max": 1.75,
+        "weight_min": 67,
+        "weight_max": 120,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 640,
+          "stats": {
+            "hp": 135,
+            "speed": 85,
+            "atk": 128,
+            "def": 137,
+            "sp_atk": 54,
+            "sp_def": 101
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 483,
+    "name": "鲸羽",
+    "filename": "483-鲸羽.png",
+    "egg_data": {
+      "egg_groups": [
+        "海洋组",
+        "妖精组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "鲸羽",
+      "圆环鲸羽"
+    ],
+    "forms": [
+      {
+        "id": 483,
+        "name": "鲸羽",
+        "egg_groups": [
+          "海洋组",
+          "妖精组"
+        ],
+        "height_min": 0.26,
+        "height_max": 0.39,
+        "weight_min": 2,
+        "weight_max": 3.7,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 457,
+          "stats": {
+            "hp": 108,
+            "speed": 80,
+            "atk": 30,
+            "def": 58,
+            "sp_atk": 99,
+            "sp_def": 82
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 484,
+    "name": "圆环鲸羽",
+    "filename": "484-圆环鲸羽.png",
+    "egg_data": {
+      "egg_groups": [
+        "海洋组",
+        "妖精组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "鲸羽",
+      "圆环鲸羽"
+    ],
+    "forms": [
+      {
+        "id": 484,
+        "name": "圆环鲸羽",
+        "egg_groups": [
+          "海洋组",
+          "妖精组"
+        ],
+        "height_min": 1.15,
+        "height_max": 1.5,
+        "weight_min": 80,
+        "weight_max": 140,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 571,
+          "stats": {
+            "hp": 135,
+            "speed": 100,
+            "atk": 38,
+            "def": 73,
+            "sp_atk": 123,
+            "sp_def": 102
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 485,
+    "name": "豆粒鹅",
+    "filename": "485-豆粒鹅.png",
+    "egg_data": {
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "豆粒鹅",
+      "刨雪鹅"
+    ],
+    "forms": [
+      {
+        "id": 485,
+        "name": "豆粒鹅",
+        "egg_groups": [
+          "动物组",
+          "天空组"
+        ],
+        "height_min": 0.15,
+        "height_max": 0.25,
+        "weight_min": 0.8,
+        "weight_max": 1.66,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 503,
+          "stats": {
+            "hp": 102,
+            "speed": 76,
+            "atk": 77,
+            "def": 107,
+            "sp_atk": 69,
+            "sp_def": 72
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 486,
+    "name": "刨雪鹅",
+    "filename": "486-刨雪鹅.png",
+    "egg_data": {
+      "egg_groups": [
+        "动物组",
+        "天空组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "豆粒鹅",
+      "刨雪鹅"
+    ],
+    "forms": [
+      {
+        "id": 486,
+        "name": "刨雪鹅",
+        "egg_groups": [
+          "动物组",
+          "天空组"
+        ],
+        "height_min": 1.39,
+        "height_max": 1.6,
+        "weight_min": 97.3,
+        "weight_max": 175,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 629,
+          "stats": {
+            "hp": 127,
+            "speed": 95,
+            "atk": 96,
+            "def": 134,
+            "sp_atk": 87,
+            "sp_def": 90
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 487,
+    "name": "西瓜虫",
+    "filename": "487-西瓜虫.png",
+    "egg_data": {
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "西瓜虫",
+      "冬虫夏瓜"
+    ],
+    "forms": [
+      {
+        "id": 487,
+        "name": "西瓜虫",
+        "egg_groups": [
+          "昆虫组",
+          "植物组"
+        ],
+        "height_min": 0.21,
+        "height_max": 0.33,
+        "weight_min": 0.6,
+        "weight_max": 1.5,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 464,
+          "stats": {
+            "hp": 86,
+            "speed": 64,
+            "atk": 50,
+            "def": 61,
+            "sp_atk": 100,
+            "sp_def": 103
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 488,
+    "name": "冬虫夏瓜",
+    "filename": "488-冬虫夏瓜.png",
+    "egg_data": {
+      "egg_groups": [
+        "昆虫组",
+        "植物组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "西瓜虫",
+      "冬虫夏瓜"
+    ],
+    "forms": [
+      {
+        "id": 488,
+        "name": "冬虫夏瓜",
+        "egg_groups": [
+          "昆虫组",
+          "植物组"
+        ],
+        "height_min": 0.44,
+        "height_max": 0.68,
+        "weight_min": 2.8,
+        "weight_max": 5.7,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 580,
+          "stats": {
+            "hp": 107,
+            "speed": 80,
+            "atk": 62,
+            "def": 77,
+            "sp_atk": 125,
+            "sp_def": 129
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 489,
+    "name": "小剪影",
+    "filename": "489-小剪影.png",
+    "egg_data": {
+      "egg_groups": [
+        "妖精组",
+        "魔力组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "小剪影",
+      "影子剪纸"
+    ],
+    "forms": [
+      {
+        "id": 489,
+        "name": "小剪影",
+        "egg_groups": [
+          "妖精组",
+          "魔力组"
+        ],
+        "height_min": 0.45,
+        "height_max": 0.68,
+        "weight_min": 0.27,
+        "weight_max": 0.9,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 502,
+          "stats": {
+            "hp": 98,
+            "speed": 96,
+            "atk": 114,
+            "def": 84,
+            "sp_atk": 44,
+            "sp_def": 66
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 490,
+    "name": "影子剪纸",
+    "filename": "490-影子剪纸.png",
+    "egg_data": {
+      "egg_groups": [
+        "妖精组",
+        "魔力组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "小剪影",
+      "影子剪纸"
+    ],
+    "forms": [
+      {
+        "id": 490,
+        "name": "影子剪纸",
+        "egg_groups": [
+          "妖精组",
+          "魔力组"
+        ],
+        "height_min": 1.28,
+        "height_max": 1.57,
+        "weight_min": 1.2,
+        "weight_max": 2.3,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 629,
+          "stats": {
+            "hp": 123,
+            "speed": 120,
+            "atk": 143,
+            "def": 104,
+            "sp_atk": 56,
+            "sp_def": 83
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 491,
+    "name": "滴溜豚",
+    "filename": "491-滴溜豚.png",
+    "egg_data": {
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "滴溜豚",
+      "滴廿豚"
+    ],
+    "forms": [
+      {
+        "id": 491,
+        "name": "滴溜豚",
+        "egg_groups": [
+          "海洋组"
+        ],
+        "height_min": 0.15,
+        "height_max": 0.3,
+        "weight_min": 1.5,
+        "weight_max": 3,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 520,
+          "stats": {
+            "hp": 91,
+            "speed": 80,
+            "atk": 89,
+            "def": 73,
+            "sp_atk": 89,
+            "sp_def": 98
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 492,
+    "name": "滴廿豚",
+    "filename": "492-滴廿豚.png",
+    "egg_data": {
+      "egg_groups": [
+        "海洋组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "滴溜豚",
+      "滴廿豚"
+    ],
+    "forms": [
+      {
+        "id": 492,
+        "name": "滴廿豚",
+        "egg_groups": [
+          "海洋组"
+        ],
+        "height_min": 0.4,
+        "height_max": 0.6,
+        "weight_min": 4,
+        "weight_max": 8,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 652,
+          "stats": {
+            "hp": 114,
+            "speed": 100,
+            "atk": 112,
+            "def": 92,
+            "sp_atk": 112,
+            "sp_def": 122
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 493,
+    "name": "阿布",
+    "filename": "493-阿布.png",
+    "egg_data": {
+      "egg_groups": [],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null,
+      "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
+    },
+    "evolution_chain": [
+      "阿布"
+    ],
+    "forms": [
+      {
+        "id": 493,
+        "name": "阿布",
+        "egg_groups": [],
+        "height_min": 0.8,
+        "height_max": 1.6,
+        "weight_min": 9,
+        "weight_max": 28.2,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 578,
+          "stats": {
+            "hp": 126,
+            "speed": 100,
+            "atk": 105,
+            "def": 122,
+            "sp_atk": 45,
+            "sp_def": 80
+          }
+        }
+      },
+      {
+        "id": 493,
+        "name": "超能阿布",
+        "egg_groups": [],
+        "height_min": 0.9,
+        "height_max": 1.7,
+        "weight_min": 13.3,
+        "weight_max": 39.9,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [],
+        "stats": {
+          "sum": 578,
+          "stats": {
+            "hp": 126,
+            "speed": 100,
+            "atk": 105,
+            "def": 122,
+            "sp_atk": 45,
+            "sp_def": 80
+          }
+        }
+      }
+    ],
+    "types": [],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Bwiki S5"
+  },
+  {
+    "id": 494,
+    "name": "呆呆铃",
+    "filename": "494-呆呆铃.png",
+    "egg_data": {
+      "egg_groups": [
+        "植物组",
+        "拟人组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "呆呆铃",
+      "跳跳铃",
+      "铃兰夫人"
+    ],
+    "forms": [
+      {
+        "id": 494,
+        "name": "呆呆铃",
+        "egg_groups": [
+          "植物组",
+          "拟人组"
+        ],
+        "height_min": 0.4,
+        "height_max": 0.56,
+        "weight_min": 1.9,
+        "weight_max": 3.83,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [
+          "萌",
+          "草"
+        ],
+        "stats": {
+          "sum": 329,
+          "stats": {
+            "hp": 82,
+            "speed": 36,
+            "atk": 27,
+            "def": 49,
+            "sp_atk": 66,
+            "sp_def": 69
+          }
+        }
+      }
+    ],
+    "types": [
+      "萌",
+      "草"
+    ],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Roco.world #494–496 and lkmerchant egg groups; six-column ordering crosschecked with #493 WIKI"
+  },
+  {
+    "id": 495,
+    "name": "跳跳铃",
+    "filename": "495-跳跳铃.png",
+    "egg_data": {
+      "egg_groups": [
+        "植物组",
+        "拟人组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "呆呆铃",
+      "跳跳铃",
+      "铃兰夫人"
+    ],
+    "forms": [
+      {
+        "id": 495,
+        "name": "跳跳铃",
+        "egg_groups": [
+          "植物组",
+          "拟人组"
+        ],
+        "height_min": 0.72,
+        "height_max": 1.25,
+        "weight_min": 21,
+        "weight_max": 35.8,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [
+          "萌",
+          "草"
+        ],
+        "stats": {
+          "sum": 439,
+          "stats": {
+            "hp": 109,
+            "speed": 48,
+            "atk": 37,
+            "def": 65,
+            "sp_atk": 88,
+            "sp_def": 92
+          }
+        }
+      }
+    ],
+    "types": [
+      "萌",
+      "草"
+    ],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Roco.world #494–496 and lkmerchant egg groups; six-column ordering crosschecked with #493 WIKI"
+  },
+  {
+    "id": 496,
+    "name": "铃兰夫人",
+    "filename": "496-铃兰夫人.png",
+    "egg_data": {
+      "egg_groups": [
+        "植物组",
+        "拟人组"
+      ],
+      "height_min": null,
+      "height_max": null,
+      "weight_min": null,
+      "weight_max": null,
+      "giant_weight_line": null,
+      "tiny_weight_line": null
+    },
+    "evolution_chain": [
+      "呆呆铃",
+      "跳跳铃",
+      "铃兰夫人"
+    ],
+    "forms": [
+      {
+        "id": 496,
+        "name": "铃兰夫人",
+        "egg_groups": [
+          "植物组",
+          "拟人组"
+        ],
+        "height_min": 1.75,
+        "height_max": 2.6,
+        "weight_min": 50,
+        "weight_max": 70,
+        "giant_weight_line": null,
+        "tiny_weight_line": null,
+        "types": [
+          "萌",
+          "草"
+        ],
+        "stats": {
+          "sum": 548,
+          "stats": {
+            "hp": 136,
+            "speed": 60,
+            "atk": 46,
+            "def": 81,
+            "sp_atk": 110,
+            "sp_def": 115
+          }
+        }
+      }
+    ],
+    "types": [
+      "萌",
+      "草"
+    ],
+    "source_game_id": null,
+    "source_release_date": null,
+    "source_note": "Roco.world #494–496 and lkmerchant egg groups; six-column ordering crosschecked with #493 WIKI"
   }
 ]
