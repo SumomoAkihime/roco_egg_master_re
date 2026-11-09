@@ -137,7 +137,7 @@ async function getSource(){
      if(!response.ok)throw new Error("HTTP "+response.status);
      let body=await response.text();
      if(body.startsWith("{")&&body.includes('"parse"')){const d=JSON.parse(body);body=d.parse?.wikitext?.["*"]||d.parse?.wikitext||"";}
-     if(!body.trim().startsWith("return {"))throw new Error("Unexpected payload prefix "+body.slice(0,80));
+     if(!/^(?:\s*--[^\n]*(?:\n|$))*\s*return\s*\{/.test(body))throw new Error("Unexpected payload prefix "+body.slice(0,80));
      return {body,url};
    } catch(error){errors.push(url+": "+error.message)}
  }
