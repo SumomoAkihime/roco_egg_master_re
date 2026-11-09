@@ -217,17 +217,18 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
   existingParents,
   onImport
 }) => {
-  const [activeTab, setActiveTab] = useState<"sqlite" | "paste">("sqlite");
+  const [activeTab, setActiveTab] = useState<"sqlite" | "api" | "paste">("sqlite");
   const [importCurrentPage, setImportCurrentPage] = useState(1);
   const IMPORT_PAGE_SIZE = 50;
-  const [apiUrl, setApiUrl] = useState("http://127.0.0.1:4939/api/pets");
+  const [apiUsers, setApiUsers] = useState<Array<{ uid: string; name: string }>>([]);
+  const [apiUid, setApiUid] = useState("");
   const [jsonText, setJsonText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   
   // SQLite 专属状态
-  const [rocoUsers, setRocoUsers] = useState<Array<{ uid: number; name: string }>>([]);
+  const [rocoUsers, setRocoUsers] = useState<Array<{ uid: string; name: string }>>([]);
   const [selectedUid, setSelectedUid] = useState<string>("");
   const [isSqliteAvailable, setIsSqliteAvailable] = useState(false);
   
@@ -252,7 +253,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       try {
         const res = await window.electronAPI.getRocoUsers();
         if (res.success && res.data && res.data.length > 0) {
-          setRocoUsers(res.data);
+          setRocoUsers(res.data.map(u => ({ uid: String(u.uid), name: u.name })));
           setSelectedUid(String(res.data[0].uid));
           setIsSqliteAvailable(true);
           return true;
@@ -839,41 +840,78 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
     }
   };
 
-  // 2. 发起 API 请求
-  const handleApiFetch = async () => {
+  const getLocalApiJson = async (path: string): Promise<any> => {
+    const url = "http://127.0.0.1:4939" + path;
+    if (window.electronAPI?.httpGet) {
+      const response = await window.electronAPI.httpGet(url);
+      if (!response.success) throw new Error(response.error || "本地助手请求失败");
+      return response.data;
+    }
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    return await response.json();
+  };
+
+  const loadApiUsers = async () => {
+    setIsLoading(true);
+    setErrorMsg("");
+    try {
+      const raw = await getLocalApiJson("/api/users");
+      if (!Array.isArray(raw)) throw new Error("助手 /api/users 返回格式不符合预期");
+      const users = raw.filter(u => u && u.uid !== undefined).map(u => ({
+        uid: String(u.uid), name: String(u.name || "未命名角色")
+      }));
+      setApiUsers(users);
+      setApiUid(users[0]?.uid || "");
+      if (!users.length) setErrorMsg("助手未发现已登录角色，请确认游戏流量已经被抓取。");
+    } catch (error: any) {
+      setErrorMsg("连接本地助手失败：" + error.message);
+      setApiUsers([]);
+      setApiUid("");
+    } finally { setIsLoading(false); }
+  };
+
+  const handleLocalApiFetch = async () => {
+    if (!/^\\d+$/.test(apiUid)) {
+      setErrorMsg("请先读取助手账号列表并选择角色。");
+      return;
+    }
     setIsLoading(true);
     setErrorMsg("");
     setSuccessMsg("");
-    setConnStatus('fetching');
-
+    setConnStatus("fetching");
     try {
-      if (window.electronAPI && window.electronAPI.httpGet) {
-        // Electron 桌面环境下，使用主进程代理转发，绕过 CORS
-        const res = await window.electronAPI.httpGet(apiUrl);
-        if (res.success) {
-          setConnStatus('success');
-          const raw = res.data;
-          const list = Array.isArray(raw) ? raw : (raw.pets || raw.data || raw.list || []);
-          handleRawDataList(list);
-        } else {
-          setConnStatus('error');
-          setErrorMsg(res.error || "请求失败，请确保洛克王国世界助手正在后台运行且端口正确");
+      const encodedUid = encodeURIComponent(apiUid);
+      const pets = await getLocalApiJson("/api/pet-info?uid=" + encodedUid);
+      if (!Array.isArray(pets)) throw new Error("助手 /api/pet-info 未返回宠物数组");
+      if (!pets.length) throw new Error("当前角色尚无宠物快照，请在游戏中打开仓库后重试");
+      const positions = new Map<string, string>();
+      let boxWarning = "";
+      try {
+        const boxes = await getLocalApiJson("/api/box-info?uid=" + encodedUid);
+        if (!Array.isArray(boxes)) throw new Error("盒子数据格式不正确");
+        for (const box of boxes) {
+          if (!Array.isArray(box?.data)) continue;
+          box.data.forEach((gid: any, index: number) => {
+            if (gid !== undefined && gid !== null && String(gid) !== "0") {
+              positions.set(String(gid), `仓库${Number(box.id) + 1}·位置${index + 1}`);
+            }
+          });
         }
-      } else {
-        // 普通网页端，降级直接 Fetch
-        const res = await fetch(apiUrl);
-        if (!res.ok) throw new Error(`HTTP 错误: ${res.status}`);
-        const raw = await res.json();
-        setConnStatus('success');
-        const list = Array.isArray(raw) ? raw : (raw.pets || raw.data || raw.list || []);
-        handleRawDataList(list);
+      } catch (error: any) {
+        boxWarning = "；仓库位置尚未读取：" + error.message;
       }
-    } catch (err: any) {
-      setConnStatus('error');
-      setErrorMsg(`连接助手接口失败: ${err.message}。您可以切换至“文本粘贴”标签，直接粘贴宠物 JSON。`);
-    } finally {
-      setIsLoading(false);
-    }
+      const list = pets.map((pet: any) => ({
+        ...pet,
+        position: positions.get(String(pet.gid)) || pet.position || "-"
+      }));
+      handleRawDataList(list);
+      setSuccessMsg(`本地助手读取到 ${list.length} 只宠物、${positions.size} 个仓库格位${boxWarning}。请在导入前核对异色和新赛季精灵名称。`);
+      setConnStatus("success");
+    } catch (error: any) {
+      setConnStatus("error");
+      setErrorMsg("读取本地助手仓库失败：" + error.message);
+    } finally { setIsLoading(false); }
   };
 
   // 3. 解析手动粘贴的 JSON 文本
@@ -1076,6 +1114,12 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
               </button>
             )}
             <button
+              onClick={() => { setActiveTab("api"); setErrorMsg(""); setSuccessMsg(""); if (!apiUsers.length) void loadApiUsers(); }}
+              className={`px-3.5 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${activeTab === "api" ? "bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-xs" : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"}`}
+            >
+              <RefreshCw className="w-3.5 h-3.5" /> 助手 API 直连
+            </button>
+            <button
               onClick={() => { setActiveTab("paste"); setErrorMsg(""); setSuccessMsg(""); }}
               className={`px-3.5 py-1.5 rounded-md text-xs font-bold transition-all cursor-pointer ${
                 activeTab === "paste"
@@ -1129,6 +1173,15 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
               </div>
             )}
 
+            {activeTab === "api" && (
+              <div className="flex items-center justify-end gap-2 w-full">
+                <button onClick={loadApiUsers} disabled={isLoading} className="px-3 py-2 border border-indigo-200 dark:border-indigo-700 rounded-lg text-xs cursor-pointer disabled:opacity-50">刷新角色</button>
+                <select aria-label="本地助手角色" value={apiUid} onChange={e => setApiUid(e.target.value)} className="min-w-0 flex-1 max-w-52 p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent text-xs">
+                  {apiUsers.map(u => <option key={u.uid} value={u.uid}>{u.name}（{u.uid}）</option>)}
+                </select>
+                <button onClick={handleLocalApiFetch} disabled={isLoading || !apiUid} className="px-3 py-2 rounded-lg bg-indigo-600 text-white font-bold text-xs disabled:opacity-50 cursor-pointer">读取仓库</button>
+              </div>
+            )}
             {activeTab === "paste" && (
               <div className="flex items-center gap-2 w-full justify-end">
                 <button
