@@ -33,12 +33,12 @@ const EGG_GROUPS={1:"无法孵蛋",2:"巨灵组",3:"两栖组",4:"昆虫组",5:"
  12:"魔力组",13:"海洋组",14:"龙组",15:"机械组"};
 function fail(msg){throw new Error(msg)}
 function parseLua(content){
- const re=/\\s+|--[^\\n]*|"(?:\\\\.|[^"\\\\])*"|-?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?|[A-Za-z_][A-Za-z0-9_]*|[{}=\\[\\],;]/gy;
+ const re=/\s+|--[^\n]*|"(?:\\.|[^"\\])*"|-?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?|[A-Za-z_][A-Za-z0-9_]*|[{}=\[\],;]/gy;
  const tokens=[];let pos=0;
  while(pos<content.length){re.lastIndex=pos;const m=re.exec(content);
    if(!m)fail("Malformed WIKI Lua at byte "+pos);
    pos=re.lastIndex;const v=m[0];
-   if(!/^\\s|^--/.test(v))tokens.push(v);
+   if(!/^\s|^--/.test(v))tokens.push(v);
  }
  let ix=0;function take(expected){const x=tokens[ix++];if(expected!==undefined&&x!==expected)fail("Lua expected "+expected+" got "+x);return x;}
  function value(){const t=tokens[ix];if(t==="{"){take("{");const obj={},seq=[];let keyed=false;
@@ -51,7 +51,7 @@ function parseLua(content){
    take("}");if(keyed&&seq.length)seq.forEach((v,i)=>obj[i+1]=v);return keyed?obj:seq;
  }
  if(t?.startsWith('"'))return JSON.parse(take());
- if(/^-?(?:\\d|\\.)/.test(t)){take();return Number(t)}
+ if(/^-?(?:\d|\.)/.test(t)){take();return Number(t)}
  if(["true","false","nil"].includes(t)){take();return t==="nil"?null:t==="true";}
  fail("Invalid Lua value "+t);
  }
@@ -64,7 +64,7 @@ function groups(record){
  if(result.some(x=>!x))fail("Unknown egg group "+JSON.stringify(g)+" on "+record.name);
  return result.length?[...new Set(result)]:["无法孵蛋"];
 }
-function range(v){const m=String(v||"").match(/([\\d.]+)\\s*(?:[~～-]\\s*([\\d.]+))?/);return m?[Number(m[1]),Number(m[2]||m[1])]:[null,null]}
+function range(v){const m=String(v||"").match(/([\d.]+)\s*(?:[~～-]\s*([\d.]+))?/);return m?[Number(m[1]),Number(m[2]||m[1])]:[null,null]}
 function cleanTypes(v){return (Array.isArray(v)?v:[]).map(x=>String(x).replace(/系$/,""));}
 function nativeForm(item){
  const [hmin,hmax]=range(item.height),[wmin,wmax]=range(item.weight),s=item.stats||{};
