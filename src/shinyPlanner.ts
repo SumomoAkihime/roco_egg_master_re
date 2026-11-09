@@ -15,6 +15,7 @@ export interface ShinyRoute {
   target: string;
   species: string[];
   missingMothers: string[];
+  requiresMaleOffspring?: boolean;
   status: "owned" | "reachable" | "unknown" | "unreachable";
 }
 export interface ShinyPlan {
@@ -51,18 +52,48 @@ export function planShinyNests(
   const females = parents.filter(p => p.gender === "♀" && nameOf(p) && eggGroups(nameOf(p), p.groups).length);
   const goal = new Set(targets);
   const ownedShinies = new Set(parents.filter(p => p.isShiny).map(nameOf));
-  const candidates: ShinyPair[] = [];
+  const femaleByGroup = new Map<string, ParentPet[]>();
+  const maleByGroup = new Map<string, ParentPet[]>();
+  for (const mother of females) {
+    for (const group of eggGroups(nameOf(mother), mother.groups)) {
+      const list = femaleByGroup.get(group) || [];
+      list.push(mother);
+      femaleByGroup.set(group, list);
+    }
+  }
   for (const father of males) {
-    for (const mother of females) {
-      if (!father.isShiny && !mother.isShiny) continue;
-      const groups = compatible(father, mother);
-      if (!groups.length) continue;
-      const priority =
-        (goal.has(nameOf(mother)) ? 100 : 0) +
-        (!ownedShinies.has(nameOf(mother)) ? 30 : 0) +
-        (father.isShiny ? 20 : 5) +
-        (groups.length > 1 ? 3 : 0);
-      candidates.push({ father, mother, groups, priority });
+    for (const group of eggGroups(nameOf(father), father.groups)) {
+      const list = maleByGroup.get(group) || [];
+      list.push(father);
+      maleByGroup.set(group, list);
+    }
+  }
+  // 仅遍历至少有一方为异色的组合，避免把全部仓库做无意义的笛卡尔积。
+  const candidates: ShinyPair[] = [];
+  const seen = new Set<string>();
+  const addCandidate = (father: ParentPet, mother: ParentPet) => {
+    if (father.id === mother.id) return;
+    const key = father.id + ":" + mother.id;
+    if (seen.has(key)) return;
+    seen.add(key);
+    const groups = compatible(father, mother);
+    if (!groups.length) return;
+    const priority =
+      (goal.has(nameOf(mother)) ? 100 : 0) +
+      (!ownedShinies.has(nameOf(mother)) ? 30 : 0) +
+      (father.isShiny ? 20 : 5) +
+      (groups.length > 1 ? 3 : 0);
+    candidates.push({ father, mother, groups, priority });
+  };
+  for (const father of males.filter(p => p.isShiny)) {
+    for (const group of eggGroups(nameOf(father), father.groups)) {
+      for (const mother of femaleByGroup.get(group) || []) addCandidate(father, mother);
+    }
+  }
+  // 异色母体 × 普通公体也可以成为候选，不能只从异色公体扩散。
+  for (const mother of females.filter(p => p.isShiny)) {
+    for (const group of eggGroups(nameOf(mother), mother.groups)) {
+      for (const father of maleByGroup.get(group) || []) addCandidate(father, mother);
     }
   }
   candidates.sort((a, b) => b.priority - a.priority ||
@@ -110,13 +141,15 @@ export function planShinyRoutes(parents: ParentPet[], targets: string[], maxHops
       speciesByGroup.set(group, names);
     }
   }
-  const shinyMales = [...new Set(parents.filter(p => p.isShiny && p.gender === "♂").map(nameOf))]
+  const shinySeeds = [...new Set(parents.filter(p => p.isShiny).map(nameOf))]
     .filter(name => groupsBySpecies.has(name));
+  const availableShinyMaleSpecies = new Set(parents.filter(p => p.isShiny && p.gender === "♂").map(nameOf));
   const ownedShinies = new Set(parents.filter(p => p.isShiny).map(nameOf));
   const ownedFemales = new Set(parents.filter(p => p.gender === "♀").map(nameOf));
   const visited = new Map<string, string[]>();
   const queue: string[] = [];
-  for (const name of shinyMales) {
+  // 母体异色可作为潜在传递起点，但需要先培育同种异色公体。
+  for (const name of shinySeeds) {
     visited.set(name, [name]);
     queue.push(name);
   }
@@ -148,6 +181,7 @@ export function planShinyRoutes(parents: ParentPet[], targets: string[], maxHops
       target,
       species,
       missingMothers: species.slice(1).filter(s => !ownedFemales.has(s)),
+      requiresMaleOffspring: !availableShinyMaleSpecies.has(species[0]),
       status: "reachable"
     };
   });
