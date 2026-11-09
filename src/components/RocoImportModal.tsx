@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { ParentPet, cleanNature, STATS_OPTIONS } from "../types";
 import { decodePetMutation } from "../petMutation";
+import { parseBreedingGender } from "../petGender";
 import { resolvePetNameByConfig, catalogDexId, importedPetGid } from "../petImportIdentity";
 import { assignLocalBoxPositions, mapLocalBoxPositions } from "../localHelperApi";
 import {
@@ -558,15 +559,9 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       const petDetails = getPetDetails(baseName);
       const groups = petDetails ? petDetails.groups : [];
 
-      // 2. 识别性别 (1=公, 2=母, 0=未知)
-      let gender: "♂" | "♀" = "♀"; // 默认母
-      const gVal = item.gender !== undefined ? item.gender : item.sex;
-      if (gVal !== undefined) {
-        const gStr = String(gVal).toLowerCase();
-        if (gStr === "1" || gStr === "male" || gStr === "m" || gStr.includes("公") || gStr.includes("雄") || gStr.includes("♂")) {
-          gender = "♂";
-        }
-      }
+      // 父母本仓库不接收性别未知/无性的个体；不能默认当成母体排窝。
+      const gender = parseBreedingGender(item.gender ?? item.sex);
+      if (!gender) return null;
 
       // 3. 识别性格
       let nature = "错性格";
@@ -796,7 +791,12 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       setErrorMsg("未能解析出任何有效的精灵数据，请检查字段结构");
     } else {
       setParsedPets(results);
-      setSuccessMsg(`成功导入并解析出 ${results.length} 只精灵！`);
+      const skipped = list.length - results.length;
+      const confirmedShiny = results.filter(p => p.mutationVerified && p.isShiny).length;
+      const confirmedColorful = results.filter(p => p.mutationVerified && p.isColorful).length;
+      const conflicts = results.filter(p => p.mutationConflict).length;
+      const unknownMutation = results.filter(p => !p.mutationVerified && !p.mutationConflict).length;
+      setSuccessMsg(`可用于父母本管理的精灵 ${results.length} 只（异色 ${confirmedShiny}、炫彩 ${confirmedColorful}、外观字段冲突 ${conflicts}、外观待确认 ${unknownMutation}）${skipped ? `；跳过 ${skipped} 只无性别或缺少有效种类资料的精灵` : ""}。`);
     }
   };
 
@@ -886,7 +886,9 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       }
       const list = assignLocalBoxPositions(pets, positions);
       handleRawDataList(list);
-      setSuccessMsg(`本地助手读取到 ${list.length} 只宠物、${positions.size} 个仓库格位${boxWarning}。请在导入前核对异色和新赛季精灵名称。`);
+      const sexUnknown = list.filter((p: any) => !parseBreedingGender(p.gender ?? p.sex)).length;
+      const shinies = list.filter((p: any) => decodePetMutation(p).isShiny === true).length;
+      setSuccessMsg(`本地助手读取 ${list.length} 只宠物、${positions.size} 个仓库格位，确认异色 ${shinies} 只${sexUnknown ? `；其中 ${sexUnknown} 只性别未知或不可配对，将跳过父母本导入` : ""}${boxWarning}。请核对特殊形态及异色标记。`);
       setConnStatus("success");
     } catch (error: any) {
       setConnStatus("error");
@@ -1373,6 +1375,10 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
                                   )}
                                 </div>
                                 <span className="truncate" title={pet.sprite}>{pet.sprite}</span>
+                                {pet.isShiny && <span className="text-[9px] text-amber-600 font-bold whitespace-nowrap">✨异色</span>}
+                                {pet.isColorful && <span className="text-[9px] text-violet-500 font-bold whitespace-nowrap">炫彩</span>}
+                                {pet.mutationConflict && <span title="抓包外观字段不一致，请人工核对" className="text-[9px] text-red-500 whitespace-nowrap">字段冲突</span>}
+                                {!pet.mutationVerified && !pet.mutationConflict && <span title="封包未提供明确异色标志" className="text-[9px] text-slate-400 whitespace-nowrap">外观待确认</span>
                               </div>
                             </td>
 
