@@ -200,6 +200,8 @@ interface ParsedPet {
   isNearTiny?: boolean;
   isNearVoice?: boolean;
   position?: string;
+  gameGid?: string;
+  isShiny?: boolean;
 }
 
 interface RocoImportModalProps {
@@ -739,8 +741,11 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
 
       // 8. 判定是否与本地已存在的数据完全重复 (使用 Set 实现 O(1) 匹配，避免 N*M 复杂度的 JSON.stringify 与 sort 重绘假死)
       const sortedStats = [...stats].sort().join(',');
+      const gameGid = item.gid !== undefined && item.gid !== null ? String(item.gid) : undefined;
       const key = `${rawName}|${gender}|${nature}|${brand}|${sortedStats}`;
-      const isDuplicate = existingSet.has(key);
+      const isDuplicate = (gameGid ? existingSet.has(`gid:${gameGid}`) : false) || existingSet.has(key);
+      // 仅在抓包字段明确为布尔 true 时识别，避免把任意形态/品质数字当成异色。
+      const isShiny = item.is_shiny === true || item.isShiny === true;
 
       return {
         uid: `parsed-${index}-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
@@ -755,6 +760,8 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         stats,
         groups,
         rawItem: item,
+        gameGid,
+        isShiny,
         selected: !isDuplicate, // 重复的默认不勾选，不重复的默认勾选
         isDuplicate,
         voice,
@@ -779,9 +786,9 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
 
     // 提前构建去重特征 Set (优化百万次 N*M JSON.stringify 查重开销)
     const existingSet = new Set<string>(
-      existingParents.map(p => {
+      existingParents.flatMap(p => {
         const sortedStats = [...p.stats].sort().join(',');
-        return `${p.sprite}|${p.gender}|${p.nature}|${p.brand}|${sortedStats}`;
+        return [`${p.sprite}|${p.gender}|${p.nature}|${p.brand}|${sortedStats}`, ...(p.gameGid ? [`gid:${p.gameGid}`] : [])];
       })
     );
 
@@ -1009,7 +1016,10 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         groups: p.groups,
         checked: false,
         voice: p.voice,
-        position: p.position
+        position: p.position,
+        gameGid: p.gameGid,
+        isShiny: p.isShiny,
+        shinySource: p.isShiny ? "packet" : undefined
       };
     });
 
