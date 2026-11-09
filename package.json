@@ -13,7 +13,7 @@
     "electron:start": "electron .",
     "electron:build": "npm run build && electron-builder",
     "compress": "node compress-images.js",
-    "test:shiny": "tsx --test tests/shinyPlanner.test.ts tests/localHelperApi.test.ts tests/s5CatalogLookup.test.ts",
+    "test:shiny": "tsx --test tests/*.test.ts",
     "check:shiny": "npm run lint && npm run test:shiny"
   },
   "dependencies": {
