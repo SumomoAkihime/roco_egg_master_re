@@ -207,8 +207,8 @@ declare global {
       getDataPath: () => Promise<string>;
       selectSavePath: (currentData: any) => Promise<{ path: string; data: any } | null>;
       httpGet?: (url: string) => Promise<{ success: boolean; data?: any; error?: string; raw?: string }>;
-      getRocoUsers?: () => Promise<{ success: boolean; data?: Array<{ uid: number; name: string }>; error?: string }>;
-      getRocoPets?: (uid: string | number) => Promise<{ success: boolean; data?: Array<{ id: number; data: any }>; error?: string }>;
+      getRocoUsers?: () => Promise<{ success: boolean; data?: Array<{ uid: string; name: string }>; error?: string }>;
+      getRocoPets?: (uid: string | number) => Promise<{ success: boolean; data?: Array<{ id: string; data: any }>; error?: string }>;
       showMainWindow?: () => void;
       resizeFloatWindow?: (size: { width: number; height: number }) => void;
       dragFloatWindow?: (delta: { deltaX: number; deltaY: number }) => void;
