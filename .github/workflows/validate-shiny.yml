@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "src/**"
+      - "data/season-overlays/**"
       - "scripts/**"
       - "electron/**"
       - "tests/**"
@@ -37,6 +38,8 @@ jobs:
           node --check electron/main.cjs
       - name: Test WIKI S5 parser and freshness gate
         run: node --test tests/importLiveWiki.test.cjs
+      - name: Validate bundled S5 catalog
+        run: node --test tests/s5Catalog.test.cjs
       - name: Probe current WIKI S5 source (advisory only)
         continue-on-error: true
         run: node scripts/import-live-wiki.cjs
