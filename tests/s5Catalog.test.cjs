@@ -27,7 +27,11 @@ test("new entries are bundled exactly once and retain distinct game configuratio
  for(const row of s5) {
   const installed=catalog.find(x=>x.id===row.id);
   assert.deepEqual(installed,row);
-  assert.ok(Number.isSafeInteger(row.source_game_id));
+  if ([480,486,489].includes(row.id)) {
+   assert.equal(row.source_game_id,null);
+   assert.ok(Number.isSafeInteger(row.source_game_id_candidate));
+   assert.equal(mapped[String(row.source_game_id_candidate)],undefined);
+  } else assert.ok(Number.isSafeInteger(row.source_game_id));
  }
  assert.equal(mapped["3168"],"阿布");
  assert.equal(mapped["3806"],"阿瓦鲨_柠檬鲨的样子");
