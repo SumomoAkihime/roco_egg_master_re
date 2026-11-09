@@ -18,6 +18,7 @@ import {
   ChevronRight
 } from "lucide-react";
 import { ParentPet, cleanNature, STATS_OPTIONS } from "../types";
+import { assignLocalBoxPositions, mapLocalBoxPositions } from "../localHelperApi";
 import {
   getPetDetails,
   getSpriteFileName,
@@ -885,26 +886,15 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       const pets = await getLocalApiJson("/api/pet-info?uid=" + encodedUid);
       if (!Array.isArray(pets)) throw new Error("助手 /api/pet-info 未返回宠物数组");
       if (!pets.length) throw new Error("当前角色尚无宠物快照，请在游戏中打开仓库后重试");
-      const positions = new Map<string, string>();
+      let positions = new Map<string, string>();
       let boxWarning = "";
       try {
         const boxes = await getLocalApiJson("/api/box-info?uid=" + encodedUid);
-        if (!Array.isArray(boxes)) throw new Error("盒子数据格式不正确");
-        for (const box of boxes) {
-          if (!Array.isArray(box?.data)) continue;
-          box.data.forEach((gid: any, index: number) => {
-            if (gid !== undefined && gid !== null && String(gid) !== "0") {
-              positions.set(String(gid), `仓库${Number(box.id) + 1}·位置${index + 1}`);
-            }
-          });
-        }
+        positions = mapLocalBoxPositions(boxes);
       } catch (error: any) {
         boxWarning = "；仓库位置尚未读取：" + error.message;
       }
-      const list = pets.map((pet: any) => ({
-        ...pet,
-        position: positions.get(String(pet.gid)) || pet.position || "-"
-      }));
+      const list = assignLocalBoxPositions(pets, positions);
       handleRawDataList(list);
       setSuccessMsg(`本地助手读取到 ${list.length} 只宠物、${positions.size} 个仓库格位${boxWarning}。请在导入前核对异色和新赛季精灵名称。`);
       setConnStatus("success");
