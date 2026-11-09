@@ -5,6 +5,7 @@ on:
     paths:
       - "src/**"
       - "scripts/**"
+      - "electron/**"
       - "tests/**"
       - "package.json"
       - "package-lock.json"
@@ -32,5 +33,7 @@ jobs:
         run: npm run test:shiny
       - name: Validate catalog dry-run script
         run: |\n          node --check scripts/import-season-data.cjs\n          node --check scripts/fetch-public-catalog.cjs
+          node --check scripts/review-catalog-snapshot.cjs
+          node --check electron/main.cjs
       - name: Vite production build
         run: npm run build
