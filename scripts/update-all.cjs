@@ -7,6 +7,23 @@ const LOCAL_AVATAR_DIR = path.join(PROJECT_ROOT, '高清精灵头像');
 const SPRITES_DIR = path.join(PROJECT_ROOT, 'images', 'sprites');
 const SPRITE_FILES_JSON = path.join(PROJECT_ROOT, 'src', 'sprite_files.json');
 const PETS_DATA_JSON = path.join(PROJECT_ROOT, 'src', 'pets_data.json');
+const SEASON_OVERLAYS_DIR = path.join(PROJECT_ROOT, 'data', 'season-overlays');
+function loadSeasonOverlays() {
+  if (!fs.existsSync(SEASON_OVERLAYS_DIR)) return [];
+  return fs.readdirSync(SEASON_OVERLAYS_DIR).filter(f => f.endsWith('.json')).sort().map(name => {
+    const file = path.join(SEASON_OVERLAYS_DIR, name);
+    const overlay = JSON.parse(fs.readFileSync(file, 'utf8'));
+    if (!overlay || !Array.isArray(overlay.records) || !overlay.meta || !overlay.meta.source_url) {
+      throw new Error('Invalid catalog overlay: ' + file);
+    }
+    for (const record of overlay.records) {
+      if (!Number.isSafeInteger(record.id) || !record.name || !Array.isArray(record.forms) ||
+          !Array.isArray(record.evolution_chain)) throw new Error('Invalid overlay species in ' + file);
+    }
+    return { file, overlay };
+  });
+}
+
 
 function cleanAndCopyAvatars() {
   console.log('▶ [1/3] 正在清空并同步高清精灵头像...');
@@ -183,6 +200,23 @@ function mergeDatabaseData() {
     mergedList.push(mergedPet);
   }
 
+
+  // 将按 CC BY-SA 等许可、带有来源元数据的赛季图鉴作为独立覆盖层读入。
+  // 旧的本地记录始终优先；ID 冲突时停止构建而不是静默覆盖用户数据。
+  const usedIds = new Map(mergedList.map(p => [p.id, p.name]));
+  let added = 0;
+  for (const { file, overlay } of loadSeasonOverlays()) {
+    for (const record of overlay.records) {
+      if (usedIds.has(record.id)) {
+        throw new Error(`赛季图鉴 ID 冲突 ${record.id}: 本地 ${usedIds.get(record.id)}, 覆盖层 ${record.name} (${file})`);
+      }
+      usedIds.set(record.id, record.name);
+      mergedList.push(record);
+      added++;
+    }
+  }
+  console.log(`✔ 从赛季图鉴覆盖层追加 ${added} 条主精灵记录，保留旧记录`);
+
   // 按照 ID 升序排列
   mergedList.sort((a, b) => a.id - b.id);
 
@@ -196,13 +230,14 @@ function generateGameIdToName() {
   const CRAWLED_RAW_CORE_JSON = path.join(PROJECT_ROOT, '洛克精灵数据打包', 'crawled_raw_core.json');
   const GAME_ID_TO_NAME_JSON = path.join(PROJECT_ROOT, 'src', 'game_id_to_name.json');
 
+  // 若没有旧爬取源，改用已提交的映射表，不能跳过新赛季增量映射。
+  const mapping = fs.existsSync(GAME_ID_TO_NAME_JSON)
+    ? JSON.parse(fs.readFileSync(GAME_ID_TO_NAME_JSON, 'utf8')) : {};
+  const rawData = fs.existsSync(CRAWLED_RAW_CORE_JSON)
+    ? JSON.parse(fs.readFileSync(CRAWLED_RAW_CORE_JSON, 'utf8')) : {};
   if (!fs.existsSync(CRAWLED_RAW_CORE_JSON)) {
-    console.warn(`⚠ 警告: 洛克精灵原始数据不存在，跳过映射生成。路径: ${CRAWLED_RAW_CORE_JSON}`);
-    return;
+    console.warn('⚠ 旧爬取源缺失，保留已有映射并追加赛季增量');
   }
-
-  const rawData = JSON.parse(fs.readFileSync(CRAWLED_RAW_CORE_JSON, 'utf8'));
-  const mapping = {};
 
   for (const key in rawData) {
     const item = rawData[key];
@@ -215,6 +250,18 @@ function generateGameIdToName() {
           mapping[num] = item.t || item.n;
         }
       }
+    }
+  }
+
+  for (const { file, overlay } of loadSeasonOverlays()) {
+    for (const [gameId, name] of Object.entries(overlay.game_id_to_name || {})) {
+      if (!/^\\d+$/.test(gameId) || typeof name !== 'string' || !name.trim()) {
+        throw new Error('无效的游戏 ID 映射: ' + file);
+      }
+      if (mapping[gameId] && mapping[gameId] !== name) {
+        throw new Error(`游戏配置 ID ${gameId} 名称冲突: 旧 ${mapping[gameId]}, 新 ${name} (${file})`);
+      }
+      mapping[gameId] = name;
     }
   }
 
