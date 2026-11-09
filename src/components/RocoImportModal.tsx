@@ -743,7 +743,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       const sortedStats = [...stats].sort().join(',');
       const gameGid = item.gid !== undefined && item.gid !== null ? String(item.gid) : undefined;
       const key = `${rawName}|${gender}|${nature}|${brand}|${sortedStats}`;
-      const isDuplicate = (gameGid ? existingSet.has(`gid:${gameGid}`) : false) || existingSet.has(key);
+      const isDuplicate = gameGid ? existingSet.has(`gid:${gameGid}`) : existingSet.has(key);
       // 仅在抓包字段明确为布尔 true 时识别，避免把任意形态/品质数字当成异色。
       const isShiny = item.is_shiny === true || item.isShiny === true;
 
