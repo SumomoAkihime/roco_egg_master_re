@@ -23313,7 +23313,9 @@
         "weight_max": 28,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "水"
+        ],
         "stats": {
           "sum": 480,
           "stats": {
@@ -23327,7 +23329,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "水"
+    ],
     "source_game_id": 3784,
     "source_release_date": null,
     "source_note": "WIKI listed pre-S5 companion species",
@@ -23365,7 +23369,9 @@
         "weight_max": 101,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "水"
+        ],
         "stats": {
           "sum": 599,
           "stats": {
@@ -23379,7 +23385,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "水"
+    ],
     "source_game_id": 3785,
     "source_release_date": null,
     "source_note": "WIKI listed pre-S5 companion species",
@@ -23414,7 +23422,10 @@
         "weight_max": 66,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "幽",
+          "龙"
+        ],
         "stats": {
           "sum": 402,
           "stats": {
@@ -23428,7 +23439,10 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "幽",
+      "龙"
+    ],
     "source_game_id": 3797,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -23463,7 +23477,10 @@
         "weight_max": 440,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "幽",
+          "龙"
+        ],
         "stats": {
           "sum": 502,
           "stats": {
@@ -23477,7 +23494,10 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "幽",
+      "龙"
+    ],
     "source_game_id": 3798,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -23513,7 +23533,9 @@
         "weight_max": 3.3,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "地"
+        ],
         "stats": {
           "sum": 359,
           "stats": {
@@ -23527,7 +23549,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "地"
+    ],
     "source_game_id": 3799,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -23563,7 +23587,9 @@
         "weight_max": 105,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "地"
+        ],
         "stats": {
           "sum": 478,
           "stats": {
@@ -23577,7 +23603,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "地"
+    ],
     "source_game_id": 3800,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -23613,7 +23641,9 @@
         "weight_max": 770,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "地"
+        ],
         "stats": {
           "sum": 598,
           "stats": {
@@ -23627,7 +23657,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "地"
+    ],
     "source_game_id": 3801,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -23663,7 +23695,9 @@
         "weight_max": 6,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "电"
+        ],
         "stats": {
           "sum": 378,
           "stats": {
@@ -23677,7 +23711,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "电"
+    ],
     "source_game_id": 3802,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -23713,7 +23749,9 @@
         "weight_max": 164,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "电"
+        ],
         "stats": {
           "sum": 503,
           "stats": {
@@ -23727,7 +23765,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "电"
+    ],
     "source_game_id": 3803,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -23763,7 +23803,9 @@
         "weight_max": 2000,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "电"
+        ],
         "stats": {
           "sum": 629,
           "stats": {
@@ -23777,7 +23819,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "电"
+    ],
     "source_game_id": 3804,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -23815,7 +23859,9 @@
         "weight_max": 2.2,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "水"
+        ],
         "stats": {
           "sum": 471,
           "stats": {
@@ -23829,7 +23875,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "水"
+    ],
     "source_game_id": 3805,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -23867,7 +23915,9 @@
         "weight_max": 15,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "水"
+        ],
         "stats": {
           "sum": 589,
           "stats": {
@@ -23892,7 +23942,9 @@
         "weight_max": 13.6,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "水"
+        ],
         "stats": {
           "sum": 596,
           "stats": {
@@ -23906,7 +23958,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "水"
+    ],
     "source_game_id": 3806,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -23946,7 +24000,10 @@
         "weight_max": 2.68,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "普通",
+          "萌"
+        ],
         "stats": {
           "sum": 461,
           "stats": {
@@ -23960,7 +24017,10 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "普通",
+      "萌"
+    ],
     "source_game_id": 3808,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24000,7 +24060,10 @@
         "weight_max": 117,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "普通",
+          "萌"
+        ],
         "stats": {
           "sum": 575,
           "stats": {
@@ -24014,7 +24077,10 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "普通",
+      "萌"
+    ],
     "source_game_id": 3809,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24054,7 +24120,10 @@
         "weight_max": 1.4,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "水",
+          "草"
+        ],
         "stats": {
           "sum": 512,
           "stats": {
@@ -24068,7 +24137,10 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "水",
+      "草"
+    ],
     "source_game_id": 3810,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24108,7 +24180,10 @@
         "weight_max": 120,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "水",
+          "草"
+        ],
         "stats": {
           "sum": 640,
           "stats": {
@@ -24122,7 +24197,10 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "水",
+      "草"
+    ],
     "source_game_id": 3811,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24162,7 +24240,10 @@
         "weight_max": 3.7,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "幻",
+          "冰"
+        ],
         "stats": {
           "sum": 457,
           "stats": {
@@ -24176,7 +24257,10 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "幻",
+      "冰"
+    ],
     "source_game_id": 3812,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24216,7 +24300,10 @@
         "weight_max": 140,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "幻",
+          "冰"
+        ],
         "stats": {
           "sum": 571,
           "stats": {
@@ -24230,7 +24317,10 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "幻",
+      "冰"
+    ],
     "source_game_id": 3813,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24270,7 +24360,9 @@
         "weight_max": 1.66,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "冰"
+        ],
         "stats": {
           "sum": 503,
           "stats": {
@@ -24284,7 +24376,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "冰"
+    ],
     "source_game_id": 3814,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24324,7 +24418,9 @@
         "weight_max": 175,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "冰"
+        ],
         "stats": {
           "sum": 629,
           "stats": {
@@ -24338,7 +24434,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "冰"
+    ],
     "source_game_id": 3815,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24378,7 +24476,10 @@
         "weight_max": 1.5,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "虫",
+          "草"
+        ],
         "stats": {
           "sum": 464,
           "stats": {
@@ -24392,7 +24493,10 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "虫",
+      "草"
+    ],
     "source_game_id": 3816,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24432,7 +24536,10 @@
         "weight_max": 5.7,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "虫",
+          "草"
+        ],
         "stats": {
           "sum": 580,
           "stats": {
@@ -24446,7 +24553,10 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "虫",
+      "草"
+    ],
     "source_game_id": 3817,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24486,7 +24596,9 @@
         "weight_max": 0.9,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "幽"
+        ],
         "stats": {
           "sum": 502,
           "stats": {
@@ -24500,7 +24612,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "幽"
+    ],
     "source_game_id": 3818,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24540,7 +24654,9 @@
         "weight_max": 2.3,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "幽"
+        ],
         "stats": {
           "sum": 629,
           "stats": {
@@ -24554,7 +24670,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "幽"
+    ],
     "source_game_id": 3819,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24592,7 +24710,10 @@
         "weight_max": 3,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "毒",
+          "幻"
+        ],
         "stats": {
           "sum": 520,
           "stats": {
@@ -24606,7 +24727,10 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "毒",
+      "幻"
+    ],
     "source_game_id": 3820,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24644,7 +24768,10 @@
         "weight_max": 8,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "毒",
+          "幻"
+        ],
         "stats": {
           "sum": 652,
           "stats": {
@@ -24658,7 +24785,10 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "毒",
+      "幻"
+    ],
     "source_game_id": 3821,
     "source_release_date": null,
     "source_note": "Bwiki S5",
@@ -24692,7 +24822,9 @@
         "weight_max": 28.2,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "龙"
+        ],
         "stats": {
           "sum": 578,
           "stats": {
@@ -24715,7 +24847,9 @@
         "weight_max": 39.9,
         "giant_weight_line": null,
         "tiny_weight_line": null,
-        "types": [],
+        "types": [
+          "龙"
+        ],
         "stats": {
           "sum": 578,
           "stats": {
@@ -24729,7 +24863,9 @@
         }
       }
     ],
-    "types": [],
+    "types": [
+      "龙"
+    ],
     "source_game_id": 3168,
     "source_release_date": null,
     "source_note": "Bwiki S5",
