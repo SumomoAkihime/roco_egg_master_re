@@ -209,6 +209,7 @@ interface ParsedPet {
   isColorful?: boolean;
   mutationVerified?: boolean;
   mutationConflict?: boolean;
+  catalogMatched?: boolean;
 }
 
 interface RocoImportModalProps {
@@ -558,6 +559,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       const baseName = rawName.split("_")[0];
       const petDetails = getPetDetails(baseName);
       const groups = petDetails ? petDetails.groups : [];
+      const catalogMatched = !!petDetails;
 
       // 父母本仓库不接收性别未知/无性的个体；不能默认当成母体排窝。
       const gender = parseBreedingGender(item.gender ?? item.sex);
@@ -749,7 +751,8 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         isColorful: mutation.isColorful,
         mutationVerified: mutation.isShiny !== undefined && !mutation.hasConflict,
         mutationConflict: mutation.hasConflict,
-        selected: !isDuplicate, // 重复的默认不勾选，不重复的默认勾选
+        catalogMatched,
+        selected: !isDuplicate && catalogMatched, // 重复的默认不勾选，不重复的默认勾选
         isDuplicate,
         voice,
         isNearGiant,
@@ -807,7 +810,8 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       const confirmedColorful = results.filter(p => p.mutationVerified && p.isColorful).length;
       const conflicts = results.filter(p => p.mutationConflict).length;
       const unknownMutation = results.filter(p => !p.mutationVerified && !p.mutationConflict).length;
-      setSuccessMsg(`可用于父母本管理的精灵 ${results.length} 只（异色 ${confirmedShiny}、炫彩 ${confirmedColorful}、外观字段冲突 ${conflicts}、外观待确认 ${unknownMutation}）${skipped ? `；跳过 ${skipped} 只无性别或缺少有效种类资料的精灵` : ""}。`);
+      const missingCatalog = results.filter(p => !p.catalogMatched).length;
+      setSuccessMsg(`可用于父母本管理的精灵 ${results.length} 只（异色 ${confirmedShiny}、炫彩 ${confirmedColorful}、外观字段冲突 ${conflicts}、外观待确认 ${unknownMutation}、缺少图鉴匹配 ${missingCatalog}）${skipped ? `；跳过 ${skipped} 只无性别或缺少有效种类资料的精灵` : ""}。`);
     }
   };
 
@@ -1386,6 +1390,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
                                   )}
                                 </div>
                                 <span className="truncate" title={pet.sprite}>{pet.sprite}</span>
+                                {!pet.catalogMatched && <span title="当前 S5 图鉴缺少对应名称/形态；默认不选中以避免错误配对" className="text-[9px] font-bold text-rose-500 whitespace-nowrap">图鉴待匹配</span>
                                 {pet.isShiny && <span className="text-[9px] text-amber-600 font-bold whitespace-nowrap">✨异色</span>}
                                 {pet.isColorful && <span className="text-[9px] text-violet-500 font-bold whitespace-nowrap">炫彩</span>}
                                 {pet.mutationConflict && <span title="抓包外观字段不一致，请人工核对" className="text-[9px] text-red-500 whitespace-nowrap">字段冲突</span>}
