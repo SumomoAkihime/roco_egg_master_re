@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import type { ParentPet } from "../src/types";
-import { compatible, findCrossPairWarnings, planShinyNests, planShinyRoutes } from "../src/shinyPlanner";
+import { compatible, evolutionPath, findCrossPairWarnings, planShinyNests, planShinyRoutes } from "../src/shinyPlanner";
 
 const p = (id: string, sprite: string, gender: "♂" | "♀", isShiny = false, groups: string[] = []): ParentPet => ({
  id, sprite, gender, isShiny, groups, brand: "普通", height: "", weight: "", nature: "", stats: []
@@ -55,4 +55,25 @@ test("large warehouse with only one shiny source remains bounded by nest count",
  const pairs = planShinyNests(parents, [], 10);
  assert.equal(pairs.length, 10);
  assert.equal(new Set(pairs.map(x => x.mother.id)).size, 10);
+});
+
+test("owned earlier shiny evolution counts as a no-egg path",()=>{
+ const pets=[p("a","布灵","♀",true)];
+ const route=planShinyRoutes(pets,["布灵布灵"])[0];
+ assert.equal(route.status,"evolve");
+ assert.deepEqual(route.species,["布灵","布灵布灵"]);
+ assert.deepEqual(route.missingMothers,[]);
+});
+test("evolution does not run backwards or between parallel terminal branches",()=>{
+ assert.equal(evolutionPath("布灵布灵","布灵"),null);
+ assert.equal(evolutionPath("翠顶夫人","黑羽夫人"),null);
+});
+test("a target's earlier evolution stage is prioritized as a breeding mother",()=>{
+ const parents=[
+   p("f","布灵","♂",true),
+   p("m1","布灵","♀",false),
+   p("m2","半朽蜜果灵","♀",false)
+ ];
+ const result=planShinyNests(parents,["布灵布灵"],1);
+ assert.equal(result[0].mother.sprite,"布灵");
 });
