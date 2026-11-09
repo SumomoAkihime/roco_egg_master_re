@@ -39,6 +39,12 @@ export interface ParentPet {
   checked?: boolean;
   voice?: number | null;
   position?: string;
+  /** 已确认异色；未识别的抓包字段不应自动标记为真 */
+  isShiny?: boolean;
+  /** 精灵实例 ID，避免以属性组合误判重复 */
+  gameGid?: string;
+  /** 异色来源：人工确认或明确协议字段 */
+  shinySource?: "manual" | "packet";
 }
 
 export interface EggData {
