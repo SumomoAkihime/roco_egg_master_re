@@ -16,7 +16,7 @@ export interface ShinyRoute {
   species: string[];
   missingMothers: string[];
   requiresMaleOffspring?: boolean;
-  status: "owned" | "reachable" | "unknown" | "unreachable";
+  status: "owned" | "evolve" | "reachable" | "unknown" | "unreachable";
 }
 export interface ShinyPlan {
   pairs: ShinyPair[];
@@ -27,6 +27,19 @@ export interface ShinyPlan {
 function nameOf(p: ParentPet): string {
   return (p.sprite || "").trim();
 }
+/** Evolution is directional. Do not treat parallel final evolutions as sequential. */
+export function evolutionPath(from: string, target: string): string[] | null {
+  if (!from || !target || from === target) return null;
+  const source = getPetDetails(from);
+  const destination = getPetDetails(target);
+  if (!source || !destination || source.familyChain !== destination.familyChain) return null;
+  if (source.maxStageName === from) return null; // already a terminal branch
+  const chain = source.familyChain.split(" → ");
+  const i = chain.indexOf(from);
+  const j = chain.indexOf(target);
+  return i >= 0 && j > i ? chain.slice(i, j + 1) : null;
+}
+
 export function eggGroups(name: string, fallback: string[] = []): string[] {
   const info = getPetDetails(name);
   const groups = (info && info.groups && info.groups.length ? info.groups : fallback);
@@ -51,6 +64,7 @@ export function planShinyNests(
   const males = parents.filter(p => p.gender === "♂" && nameOf(p) && eggGroups(nameOf(p), p.groups).length);
   const females = parents.filter(p => p.gender === "♀" && nameOf(p) && eggGroups(nameOf(p), p.groups).length);
   const goal = new Set(targets);
+  const goalFamilies = new Set(targets.map(t => getPetDetails(t)?.familyChain).filter((v): v is string => !!v));
   const ownedShinies = new Set(parents.filter(p => p.isShiny).map(nameOf));
   const femaleByGroup = new Map<string, ParentPet[]>();
   const maleByGroup = new Map<string, ParentPet[]>();
@@ -79,7 +93,7 @@ export function planShinyNests(
     const groups = compatible(father, mother);
     if (!groups.length) return;
     const priority =
-      (goal.has(nameOf(mother)) ? 100 : 0) +
+      ((goal.has(nameOf(mother)) || goalFamilies.has(getPetDetails(nameOf(mother))?.familyChain || "")) ? 100 : 0) +
       (!ownedShinies.has(nameOf(mother)) ? 30 : 0) +
       (father.isShiny ? 20 : 5) +
       (groups.length > 1 ? 3 : 0);
@@ -169,6 +183,13 @@ export function planShinyRoutes(parents: ParentPet[], targets: string[], maxHops
   return targets.map(target => {
     if (ownedShinies.has(target)) {
       return { target, species: [target], missingMothers: [], status: "owned" };
+    }
+    const evoRoute = parents.filter(p => p.isShiny)
+      .map(p => evolutionPath(nameOf(p), target))
+      .filter((route): route is string[] => !!route)
+      .sort((a, b) => a.length - b.length)[0];
+    if (evoRoute) {
+      return { target, species: evoRoute, missingMothers: [], status: "evolve" };
     }
     if (!groupsBySpecies.has(target)) {
       return { target, species: [], missingMothers: [], status: "unknown" };
