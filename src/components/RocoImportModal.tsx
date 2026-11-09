@@ -298,7 +298,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
           setIsLoading(false);
         });
       } else {
-        setActiveTab("sqlite");
+        setActiveTab("api");
       }
     }
   }, [isOpen]);
