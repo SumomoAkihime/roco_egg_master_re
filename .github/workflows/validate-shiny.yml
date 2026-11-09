@@ -31,6 +31,6 @@ jobs:
       - name: Unit tests
         run: npm run test:shiny
       - name: Validate catalog dry-run script
-        run: node --check scripts/import-season-data.cjs
+        run: |\n          node --check scripts/import-season-data.cjs\n          node --check scripts/fetch-public-catalog.cjs
       - name: Vite production build
         run: npm run build
