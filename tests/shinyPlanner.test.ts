@@ -36,3 +36,23 @@ test("cross pairs are reported for overlapping groups", () => {
  const crosses = findCrossPairWarnings(pairs);
  assert.ok(crosses.every(pair => pair.groups.length > 0));
 });
+
+test("shiny female can be paired with a compatible ordinary male", () => {
+ const parents = [p("a", "火花", "♀", true), p("b", "水蓝蓝", "♂")];
+ const pairs = planShinyNests(parents, [], 10);
+ assert.equal(pairs.length, 1);
+ assert.equal(pairs[0].mother.id, "a");
+});
+test("female-only shiny source is a conditional route requiring male offspring", () => {
+ const parents = [p("a", "火花", "♀", true), p("b", "水蓝蓝", "♂")];
+ const route = planShinyRoutes(parents, ["水蓝蓝"])[0];
+ assert.equal(route.status, "reachable");
+ assert.equal(route.requiresMaleOffspring, true);
+});
+test("large warehouse with only one shiny source remains bounded by nest count", () => {
+ const parents = [p("seed", "火花", "♂", true), ...Array.from({ length: 1000 }, (_, n) =>
+   p("m" + n, "水蓝蓝", "♀"))];
+ const pairs = planShinyNests(parents, [], 10);
+ assert.equal(pairs.length, 10);
+ assert.equal(new Set(pairs.map(x => x.mother.id)).size, 10);
+});
