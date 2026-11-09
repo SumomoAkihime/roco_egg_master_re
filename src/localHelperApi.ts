@@ -4,7 +4,7 @@ export interface LocalBox {
   data: Array<number | string | null>;
 }
 export function gameIdString(value: unknown): string | null {
-  if (typeof value === "string") return /^\\d+$/.test(value) && value !== "0" ? value : null;
+  if (typeof value === "string") return /^\d+$/.test(value) && value !== "0" ? value : null;
   // A JSON number larger than MAX_SAFE_INTEGER may have already lost precision.
   if (typeof value === "number" && Number.isSafeInteger(value) && value > 0) return String(value);
   return null;
