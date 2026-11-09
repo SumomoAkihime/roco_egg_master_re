@@ -4,7 +4,7 @@
     "source_url": "https://wiki.biligame.com/nrc/精灵列表",
     "source_license": "CC BY-SA 4.0 (WIKI original content, subject to exclusions)",
     "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "modified": "整理图鉴编号、名称、蛋组、形态、六维种族值、身高体重；图片和故事文字均未复制。游戏配置 ID、蛋参数未推断。",
+    "modified": "整理图鉴编号、名称、蛋组、形态、六维种族值、身高体重；图片和故事文字均未复制。游戏配置 ID、蛋参数未推断。 WIKI 标注“未发现”的蛋组记作未知空数组，不擅自判定为无法孵蛋。",
     "season_coverage": "467–468 为非 S5 标注；469–493 属 S5；S5 可能有未列示的变体",
     "snapshot_date": "2026-11-10",
     "min_number": 467,
@@ -120,15 +120,14 @@
       "name": "小冥龙",
       "filename": "469-小冥龙.png",
       "egg_data": {
-        "egg_groups": [
-          "无法孵蛋"
-        ],
+        "egg_groups": [],
         "height_min": null,
         "height_max": null,
         "weight_min": null,
         "weight_max": null,
         "giant_weight_line": null,
-        "tiny_weight_line": null
+        "tiny_weight_line": null,
+        "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
       },
       "evolution_chain": [
         "小冥龙",
@@ -138,9 +137,7 @@
         {
           "id": 469,
           "name": "小冥龙",
-          "egg_groups": [
-            "无法孵蛋"
-          ],
+          "egg_groups": [],
           "height_min": 0.7,
           "height_max": 0.92,
           "weight_min": 31,
@@ -171,15 +168,14 @@
       "name": "冥古龙",
       "filename": "470-冥古龙.png",
       "egg_data": {
-        "egg_groups": [
-          "无法孵蛋"
-        ],
+        "egg_groups": [],
         "height_min": null,
         "height_max": null,
         "weight_min": null,
         "weight_max": null,
         "giant_weight_line": null,
-        "tiny_weight_line": null
+        "tiny_weight_line": null,
+        "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
       },
       "evolution_chain": [
         "小冥龙",
@@ -189,9 +185,7 @@
         {
           "id": 470,
           "name": "冥古龙",
-          "egg_groups": [
-            "无法孵蛋"
-          ],
+          "egg_groups": [],
           "height_min": 2.2,
           "height_max": 2.8,
           "weight_min": 243,
@@ -222,15 +216,14 @@
       "name": "地银链",
       "filename": "471-地银链.png",
       "egg_data": {
-        "egg_groups": [
-          "无法孵蛋"
-        ],
+        "egg_groups": [],
         "height_min": null,
         "height_max": null,
         "weight_min": null,
         "weight_max": null,
         "giant_weight_line": null,
-        "tiny_weight_line": null
+        "tiny_weight_line": null,
+        "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
       },
       "evolution_chain": [
         "地银链",
@@ -241,9 +234,7 @@
         {
           "id": 471,
           "name": "地银链",
-          "egg_groups": [
-            "无法孵蛋"
-          ],
+          "egg_groups": [],
           "height_min": 0.15,
           "height_max": 0.33,
           "weight_min": 1.5,
@@ -274,15 +265,14 @@
       "name": "地底银鳞",
       "filename": "472-地底银鳞.png",
       "egg_data": {
-        "egg_groups": [
-          "无法孵蛋"
-        ],
+        "egg_groups": [],
         "height_min": null,
         "height_max": null,
         "weight_min": null,
         "weight_max": null,
         "giant_weight_line": null,
-        "tiny_weight_line": null
+        "tiny_weight_line": null,
+        "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
       },
       "evolution_chain": [
         "地银链",
@@ -293,9 +283,7 @@
         {
           "id": 472,
           "name": "地底银鳞",
-          "egg_groups": [
-            "无法孵蛋"
-          ],
+          "egg_groups": [],
           "height_min": 0.97,
           "height_max": 1.65,
           "weight_min": 65,
@@ -326,15 +314,14 @@
       "name": "地绡银龙",
       "filename": "473-地绡银龙.png",
       "egg_data": {
-        "egg_groups": [
-          "无法孵蛋"
-        ],
+        "egg_groups": [],
         "height_min": null,
         "height_max": null,
         "weight_min": null,
         "weight_max": null,
         "giant_weight_line": null,
-        "tiny_weight_line": null
+        "tiny_weight_line": null,
+        "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
       },
       "evolution_chain": [
         "地银链",
@@ -345,9 +332,7 @@
         {
           "id": 473,
           "name": "地绡银龙",
-          "egg_groups": [
-            "无法孵蛋"
-          ],
+          "egg_groups": [],
           "height_min": 2.1,
           "height_max": 4.3,
           "weight_min": 340,
@@ -378,15 +363,14 @@
       "name": "沉金兽",
       "filename": "474-沉金兽.png",
       "egg_data": {
-        "egg_groups": [
-          "无法孵蛋"
-        ],
+        "egg_groups": [],
         "height_min": null,
         "height_max": null,
         "weight_min": null,
         "weight_max": null,
         "giant_weight_line": null,
-        "tiny_weight_line": null
+        "tiny_weight_line": null,
+        "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
       },
       "evolution_chain": [
         "沉金兽",
@@ -397,9 +381,7 @@
         {
           "id": 474,
           "name": "沉金兽",
-          "egg_groups": [
-            "无法孵蛋"
-          ],
+          "egg_groups": [],
           "height_min": 0.55,
           "height_max": 0.7,
           "weight_min": 3.5,
@@ -430,15 +412,14 @@
       "name": "龙头金",
       "filename": "475-龙头金.png",
       "egg_data": {
-        "egg_groups": [
-          "无法孵蛋"
-        ],
+        "egg_groups": [],
         "height_min": null,
         "height_max": null,
         "weight_min": null,
         "weight_max": null,
         "giant_weight_line": null,
-        "tiny_weight_line": null
+        "tiny_weight_line": null,
+        "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
       },
       "evolution_chain": [
         "沉金兽",
@@ -449,9 +430,7 @@
         {
           "id": 475,
           "name": "龙头金",
-          "egg_groups": [
-            "无法孵蛋"
-          ],
+          "egg_groups": [],
           "height_min": 0.95,
           "height_max": 1.43,
           "weight_min": 97,
@@ -482,15 +461,14 @@
       "name": "龙嵴金脉",
       "filename": "476-龙嵴金脉.png",
       "egg_data": {
-        "egg_groups": [
-          "无法孵蛋"
-        ],
+        "egg_groups": [],
         "height_min": null,
         "height_max": null,
         "weight_min": null,
         "weight_max": null,
         "giant_weight_line": null,
-        "tiny_weight_line": null
+        "tiny_weight_line": null,
+        "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
       },
       "evolution_chain": [
         "沉金兽",
@@ -501,9 +479,7 @@
         {
           "id": 476,
           "name": "龙嵴金脉",
-          "egg_groups": [
-            "无法孵蛋"
-          ],
+          "egg_groups": [],
           "height_min": 2.1,
           "height_max": 3.2,
           "weight_min": 830,
@@ -1399,15 +1375,14 @@
       "name": "阿布",
       "filename": "493-阿布.png",
       "egg_data": {
-        "egg_groups": [
-          "无法孵蛋"
-        ],
+        "egg_groups": [],
         "height_min": null,
         "height_max": null,
         "weight_min": null,
         "weight_max": null,
         "giant_weight_line": null,
-        "tiny_weight_line": null
+        "tiny_weight_line": null,
+        "egg_group_status": "未发现（待核实，不能据此判定绝对无法孵蛋）"
       },
       "evolution_chain": [
         "阿布"
@@ -1416,9 +1391,7 @@
         {
           "id": 493,
           "name": "阿布",
-          "egg_groups": [
-            "无法孵蛋"
-          ],
+          "egg_groups": [],
           "height_min": 0.8,
           "height_max": 1.6,
           "weight_min": 9,
@@ -1441,9 +1414,7 @@
         {
           "id": 493,
           "name": "超能阿布",
-          "egg_groups": [
-            "无法孵蛋"
-          ],
+          "egg_groups": [],
           "height_min": 0.9,
           "height_max": 1.7,
           "weight_min": 13.3,
