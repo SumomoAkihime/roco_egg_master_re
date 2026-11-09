@@ -55,7 +55,15 @@ npm run build
 4. 确认 S5 首批与后续增量更新数据后，再把发布状态从“开发预览”改为“已覆盖 S5”。
 5. `database-backups/` 和 `roco_egg_data.json` 需保留备份；不得以新图鉴覆盖玩家已有数据。
 
-## 先拉取公开图鉴作为待审核候选\n\n在 Windows Node.js 22+ 环境运行：\n\n\`\`\`powershell\nnode scripts/fetch-public-catalog.cjs\n\`\`\`\n\n它仅通过 [091p 公开只读 API](https://091p.com/lkwg/api.html?resource=pets) 拉取分页快照，并保存至未纳入 Git 的 \`data-candidates/091p-pets-unverified.json\`。文件会带来源、更新时间和 S5 时效性提示。**不会改动 database 或正式图鉴**；因为不同网站的条目数量与 ID 命名空间有差异，必须经过人工/游戏配置核对才能转换。\n\n## 当前算法限制
+## 先拉取公开图鉴作为待审核候选\n\n在 Windows Node.js 22+ 环境运行：\n\n\`\`\`powershell\nnode scripts/fetch-public-catalog.cjs\n\`\`\`\n\n它仅通过 [091p 公开只读 API](https://091p.com/lkwg/api.html?resource=pets) 拉取分页快照，并保存至未纳入 Git 的 \`data-candidates/091p-pets-unverified.json\`。文件会带来源、更新时间和 S5 时效性提示。**不会改动 database 或正式图鉴**；第二条命令生成 \`data-candidates/catalog-review.csv\` 与 JSON，列出本地图鉴缺失候选、ID/名称冲突。由于不同网站的条目数量与 ID 命名空间有差异，必须经过人工/游戏配置核对才能转换。\n\n## 本机助手 API 一键导入（Windows）
+
+在「父母本管理中心」打开「从游戏导入数据」，切换「助手 API 直连」。启动本机 [rocom-helper](https://github.com/h3110w0r1d-y/rocom-helper)，开启实际网卡监听并进入游戏，在游戏里打开宠物箱/仓库，然后点「刷新角色」→选择 UID→「读取仓库」。
+
+此功能仅访问 `http://127.0.0.1:4939/api/users`、`/api/pet-info`、`/api/box-info`，从后两者把宠物实例 GID 和仓库格位关联，随后仍使用原项目的「导入所选精灵」逻辑。本地助手若无法识别 S5 的新封包，此功能也不能自行解码；需要升级助手协议。开发者目前没有在实际 S5 游戏客户端验证该链路。
+
+**安全提醒**：rocom-helper 项目特别提醒 Windows 本机直接网卡抓包可能存在游戏封号风险；使用前请自行确认游戏条款并评估风险。不会要求提供账号密码，且不应把含 UID、IP、GID 的原始封包或日志上传公开仓库。
+
+## 当前算法限制
 
 - 只用共同蛋组、现有已标记异色个体和性别生成**候选**配对。
 - 对异色遗传方式、雄性传递概率、隔窝/串窝关系、产蛋次数、赛季限定机制均未进行游戏实测。
