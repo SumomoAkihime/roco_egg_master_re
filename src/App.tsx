@@ -79,6 +79,7 @@ import {
 import { SortableCard } from "./components/SortableCard";
 import { ParentCard } from "./components/ParentCard";
 import { RocoImportModal } from "./components/RocoImportModal";
+import { ShinyPlannerTab } from "./components/ShinyPlannerTab";
 import { Autocomplete } from "./components/Autocomplete";
 import { WarehouseStatsTable } from "./components/WarehouseStatsTable";
 import { DataQueryTab } from "./components/DataQueryTab";
@@ -276,7 +277,7 @@ export default function App() {
     return [];
   });
 
-  const [activeTab, setActiveTab] = useState<"nest" | "parents" | "eggs" | "dataQuery">("nest");
+  const [activeTab, setActiveTab] = useState<"nest" | "parents" | "eggs" | "dataQuery" | "shiny">("nest");
   const [eggs, setEggs] = useState<EggData[]>(() => {
     const saved = localStorage.getItem("roco_egg_eggs_v1");
     if (saved) {
@@ -3370,6 +3371,14 @@ export default function App() {
               <span className="hidden sm:inline">蛋管理中心</span>
             </button>
             <button
+              onClick={() => setActiveTab("shiny")}
+              className={`px-1 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1 sm:gap-2 cursor-pointer whitespace-nowrap shrink-0 ${activeTab === "shiny" ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30" : "text-slate-400 hover:text-white hover:bg-slate-800/50"}`}
+            >
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+              <span className="sm:hidden">异色排窝</span>
+              <span className="hidden sm:inline">异色排窝规划</span>
+            </button>
+            <button
               onClick={() => setActiveTab("dataQuery")}
               className={`px-1 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1 sm:gap-2 cursor-pointer whitespace-nowrap shrink-0 ${
                 activeTab === "dataQuery"
@@ -6410,6 +6419,15 @@ export default function App() {
               </div>
             </motion.div>
           </div>
+        )}
+
+        {activeTab === "shiny" && (
+          <ShinyPlannerTab
+            parents={parents}
+            onUpdate={(id, shiny) => setParents(prev => prev.map(p => p.id === id ? {
+              ...p, isShiny: shiny, shinySource: "manual"
+            } : p))}
+          />
         )}
 
         {activeTab === "dataQuery" && (
