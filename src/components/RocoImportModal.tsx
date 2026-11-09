@@ -18,6 +18,7 @@ import {
   ChevronRight
 } from "lucide-react";
 import { ParentPet, cleanNature, STATS_OPTIONS } from "../types";
+import { decodePetMutation } from "../petMutation";
 import { assignLocalBoxPositions, mapLocalBoxPositions } from "../localHelperApi";
 import {
   getPetDetails,
@@ -203,6 +204,9 @@ interface ParsedPet {
   position?: string;
   gameGid?: string;
   isShiny?: boolean;
+  isColorful?: boolean;
+  mutationVerified?: boolean;
+  mutationConflict?: boolean;
 }
 
 interface RocoImportModalProps {
@@ -746,8 +750,8 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       const gameGid = item.gid !== undefined && item.gid !== null ? String(item.gid) : undefined;
       const key = `${rawName}|${gender}|${nature}|${brand}|${sortedStats}`;
       const isDuplicate = gameGid ? existingSet.has(`gid:${gameGid}`) : existingSet.has(key);
-      // 仅在抓包字段明确为布尔 true 时识别，避免把任意形态/品质数字当成异色。
-      const isShiny = item.is_shiny === true || item.isShiny === true;
+      // 基于 PetData.mutation_type 的明确位标志，异色与炫彩分开解析。
+      const mutation = decodePetMutation(item);
 
       return {
         uid: `parsed-${index}-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
@@ -763,7 +767,10 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         groups,
         rawItem: item,
         gameGid,
-        isShiny,
+        isShiny: mutation.isShiny,
+        isColorful: mutation.isColorful,
+        mutationVerified: mutation.source !== "unknown" && !mutation.hasConflict,
+        mutationConflict: mutation.hasConflict,
         selected: !isDuplicate, // 重复的默认不勾选，不重复的默认勾选
         isDuplicate,
         voice,
@@ -1047,7 +1054,9 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         position: p.position,
         gameGid: p.gameGid,
         isShiny: p.isShiny,
-        shinySource: p.isShiny ? "packet" : undefined
+        isColorful: p.isColorful,
+        mutationVerified: p.mutationVerified,
+        shinySource: p.mutationVerified ? "packet" : undefined
       };
     });
 
