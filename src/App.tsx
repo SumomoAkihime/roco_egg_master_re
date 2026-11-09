@@ -6425,7 +6425,7 @@ export default function App() {
           <ShinyPlannerTab
             parents={parents}
             onUpdate={(id, shiny) => setParents(prev => prev.map(p => p.id === id ? {
-              ...p, isShiny: shiny, shinySource: "manual"
+              ...p, isShiny: shiny, shinySource: "manual", mutationVerified: true
             } : p))}
           />
         )}
