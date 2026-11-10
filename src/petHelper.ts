@@ -95,6 +95,21 @@ cleanedPetsData.forEach((pet: any) => {
       });
     }
   });
+
+  // Some S5 species (e.g. 阿瓦鲨) have only named variants and no literal
+  // base-name form. Register a base-species alias so imported pets still
+  // resolve their egg groups, instead of losing all breeding eligibility.
+  if (pet.name && !petDataMap[pet.name] && Array.isArray(pet.forms) && pet.forms.length) {
+    const firstForm = pet.forms[0];
+    const baseGroups = pet.egg_data?.egg_groups?.length ? pet.egg_data.egg_groups : firstForm.egg_groups || [];
+    petDataMap[pet.name] = {
+      name: pet.name,
+      groups: cleanEggGroups(baseGroups),
+      types: pet.types?.length ? pet.types : firstForm.types || [],
+      familyChain: chainStr,
+      maxStageName: lastInChain || pet.name
+    };
+  }
 });
 
 // All unique pet names for autocomplete
@@ -125,6 +140,11 @@ const findForm = (spriteName: string): any => {
   for (const pet of cleanedPetsData) {
     let form = pet.forms.find((f: any) => normalizeName(f.name) === cleanBase);
     if (form) return form;
+    // If only variant names exist, use the first variant as the baseline
+    // size reference; do not silently fabricate a third game form.
+    if (normalizeName(pet.name) === cleanBase && pet.forms.length) {
+      return pet.forms[0];
+    }
   }
   return null;
 };

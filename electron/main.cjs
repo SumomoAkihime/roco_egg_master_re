@@ -2,6 +2,16 @@ const { app, BrowserWindow, ipcMain, dialog, Tray, Menu } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { exec, spawn } = require('child_process');
+const { configurePortablePaths } = require('./portable-paths.cjs');
+
+let portableRoot = null;
+try {
+  portableRoot = configurePortablePaths(app);
+} catch (err) {
+  dialog.showErrorBox('便携目录不可写', '请将全部程序文件解压到可写的新目录后重试。不会自动切换到旧版数据目录。\n' + err.message);
+  app.exit(1);
+  throw err;
+}
 
 let mainWindow;
 let floatWindow = null;
@@ -433,7 +443,7 @@ function getDataFilePath() {
 
   // 生产环境下（打包后的 exe 运行时）
   // 1. 优先使用 exe 同级目录
-  const exeDir = path.dirname(process.execPath);
+  const exeDir = portableRoot || path.dirname(process.execPath);
   const localFilePath = path.join(exeDir, 'roco_egg_data.json');
 
   try {
@@ -529,31 +539,54 @@ ipcMain.handle('select-save-path', async (event, currentData) => {
   };
 });
 
-ipcMain.handle('http-get', async (event, url) => {
+ipcMain.handle('http-get', async (_event, input) => {
+  let url;
+  try { url = new URL(String(input)); }
+  catch { return { success: false, error: '无效的本地助手 URL' }; }
+  // Renderer IPC is restricted to the loopback helper, not arbitrary remote hosts.
+  if (url.protocol !== 'http:' ||
+      !['127.0.0.1', 'localhost'].includes(url.hostname) ||
+      url.port !== '4939' ||
+      !/^\/api(?:\/|$)/.test(url.pathname) ||
+      url.username || url.password) {
+    return { success: false, error: '只允许访问本机 127.0.0.1:4939 的 /api 接口' };
+  }
   return new Promise((resolve) => {
-    if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) {
-      resolve({ success: false, error: '无效的协议，必须以 http:// 或 https:// 开头' });
-      return;
-    }
-    const client = url.startsWith('https') ? require('https') : require('http');
-    client.get(url, (res) => {
+    const http = require('http');
+    let settled = false;
+    const done = (result) => {
+      if (!settled) { settled = true; resolve(result); }
+    };
+    const request = http.get(url, (res) => {
+      if (!res.statusCode || res.statusCode < 200 || res.statusCode >= 300) {
+        res.resume();
+        done({ success: false, error: '助手 HTTP 状态: ' + res.statusCode });
+        return;
+      }
       let data = '';
+      let length = 0;
       res.setEncoding('utf8');
       res.on('data', (chunk) => {
-        data += chunk;
+        length += Buffer.byteLength(chunk, 'utf8');
+        if (length > 16 * 1024 * 1024) {
+          request.destroy();
+          done({ success: false, error: '助手响应超过 16 MiB 限制' });
+        } else data += chunk;
       });
       res.on('end', () => {
-        try {
-          resolve({ success: true, data: JSON.parse(data) });
-        } catch (e) {
-          resolve({ success: false, error: 'JSON解析失败: ' + e.message, raw: data });
-        }
+        if (settled) return;
+        try { done({ success: true, data: JSON.parse(data) }); }
+        catch (error) { done({ success: false, error: '助手 JSON 解析失败: ' + error.message }); }
       });
-    }).on('error', (err) => {
-      resolve({ success: false, error: '网络请求失败: ' + err.message });
     });
+    request.setTimeout(15000, () => {
+      request.destroy();
+      done({ success: false, error: '本地助手请求超时' });
+    });
+    request.on('error', (error) => done({ success: false, error: '本地助手请求失败: ' + error.message }));
   });
 });
+
 
 // 纯 JS 执行 Python 代码直连读取 SQLite
 function runPythonCommand(pyScript) {
@@ -596,7 +629,7 @@ try:
         exit(0)
     cur.execute("SELECT uid, name FROM users;")
     rows = cur.fetchall()
-    res = [{"uid": r[0], "name": r[1]} for r in rows]
+    res = [{"uid": str(r[0]), "name": r[1]} for r in rows]
     print(json.dumps({"success": True, "data": res}))
 except Exception as e:
     print(json.dumps({"success": False, "error": str(e)}))
@@ -615,10 +648,10 @@ except Exception as e:
 });
 
 ipcMain.handle('get-roco-pets', async (event, uid) => {
-  if (!uid || isNaN(Number(uid))) {
+  if (!/^\\d+$/.test(String(uid))) {
     return { success: false, error: '无效的角色 UID' };
   }
-  const cleanUid = String(parseInt(uid));
+  const cleanUid = String(uid);
   const pyScript = `
 import sqlite3, os, json
 db_path = os.path.expandvars(r"%APPDATA%\\roco_helper\\roco_helper.sqlite")
@@ -663,7 +696,9 @@ try:
             pet_data = json.loads(r[1])
             # 填入位置信息
             pet_data["position"] = pet_positions.get(pet_id, "-")
-            res.append({"id": pet_id, "data": pet_data})
+            if pet_data.get("gid") is not None:
+                pet_data["gid"] = str(pet_data["gid"])
+            res.append({"id": str(pet_id), "data": pet_data})
         except:
             pass
     print(json.dumps({"success": True, "data": res}))

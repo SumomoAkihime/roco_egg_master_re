@@ -17,3 +17,24 @@ scratch/
 抓取数据/
 *.code-workspace
 backup/
+
+# Manually reviewed public catalog snapshots, not authoritative game data
+data-candidates/
+database-backups/
+
+# Local app profiles, warehouse exports and capture inputs (never commit real data)
+portable-profile/
+roco_egg_data.json
+roco_egg_data*.json
+app_config.json
+local-data/
+raw-captures/
+captures/
+*.pcap
+*.pcapng
+*.har
+roco_helper-*.exe
+# Local packaging/delivery artifacts
+deliverables/
+*.zip
+*.zip.[0-9][0-9][0-9]

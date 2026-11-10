@@ -1,0 +1,215 @@
+{
+  "meta": {
+    "source": "Roco.world 洛克王国世界 S5 精灵详情（494–496）",
+    "source_url": "https://roco.world/zh/jini/494",
+    "additional_sources": [
+      "https://roco.world/zh/jini/495",
+      "https://roco.world/zh/jini/496",
+      "https://lkmerchant.online/pets/3822-daidailing/"
+    ],
+    "source_license": "Site-specific; only elementary factual name/egg group/stats/ranges used; no prose/images/source code copied",
+    "modified": "3 主图鉴、种族数值、进化链、蛋组与体型字段手动结构化并标注来源；游戏配置 ID 未获核实",
+    "season_coverage": "S5 番外新图鉴 494–496，基础形态数据；异色视觉形态与其他衍生形态待验证",
+    "snapshot_date": "2026-11-10",
+    "min_number": 494,
+    "max_number": 496,
+    "record_count": 3,
+    "form_count": 3,
+    "game_id_mapping_sources": [
+      "https://lkmerchant.online/pets/3797-xiaominglong/",
+      "https://lkmerchant.online/pets/3806-awasha/",
+      "https://lkmerchant.online/pets/3822-daidailing/"
+    ],
+    "game_id_mapping_warning": "游戏配置 ID 来自公开图鉴页面 URL；未单独核对的连续编号属于推定映射，需 S5 真实封包验证"
+  },
+  "records": [
+    {
+      "id": 494,
+      "name": "呆呆铃",
+      "filename": "494-呆呆铃.png",
+      "egg_data": {
+        "egg_groups": [
+          "植物组",
+          "拟人组"
+        ],
+        "height_min": null,
+        "height_max": null,
+        "weight_min": null,
+        "weight_max": null,
+        "giant_weight_line": null,
+        "tiny_weight_line": null
+      },
+      "evolution_chain": [
+        "呆呆铃",
+        "跳跳铃",
+        "铃兰夫人"
+      ],
+      "forms": [
+        {
+          "id": 494,
+          "name": "呆呆铃",
+          "egg_groups": [
+            "植物组",
+            "拟人组"
+          ],
+          "height_min": 0.4,
+          "height_max": 0.56,
+          "weight_min": 1.9,
+          "weight_max": 3.83,
+          "giant_weight_line": null,
+          "tiny_weight_line": null,
+          "types": [
+            "萌",
+            "草"
+          ],
+          "stats": {
+            "sum": 329,
+            "stats": {
+              "hp": 82,
+              "speed": 36,
+              "atk": 27,
+              "def": 49,
+              "sp_atk": 66,
+              "sp_def": 69
+            }
+          }
+        }
+      ],
+      "types": [
+        "萌",
+        "草"
+      ],
+      "source_game_id": 3822,
+      "source_release_date": null,
+      "source_note": "Roco.world #494–496 and lkmerchant egg groups; six-column ordering crosschecked with #493 WIKI",
+      "source_game_id_confidence": "crosschecked URL"
+    },
+    {
+      "id": 495,
+      "name": "跳跳铃",
+      "filename": "495-跳跳铃.png",
+      "egg_data": {
+        "egg_groups": [
+          "植物组",
+          "拟人组"
+        ],
+        "height_min": null,
+        "height_max": null,
+        "weight_min": null,
+        "weight_max": null,
+        "giant_weight_line": null,
+        "tiny_weight_line": null
+      },
+      "evolution_chain": [
+        "呆呆铃",
+        "跳跳铃",
+        "铃兰夫人"
+      ],
+      "forms": [
+        {
+          "id": 495,
+          "name": "跳跳铃",
+          "egg_groups": [
+            "植物组",
+            "拟人组"
+          ],
+          "height_min": 0.72,
+          "height_max": 1.25,
+          "weight_min": 21,
+          "weight_max": 35.8,
+          "giant_weight_line": null,
+          "tiny_weight_line": null,
+          "types": [
+            "萌",
+            "草"
+          ],
+          "stats": {
+            "sum": 439,
+            "stats": {
+              "hp": 109,
+              "speed": 48,
+              "atk": 37,
+              "def": 65,
+              "sp_atk": 88,
+              "sp_def": 92
+            }
+          }
+        }
+      ],
+      "types": [
+        "萌",
+        "草"
+      ],
+      "source_game_id": 3823,
+      "source_release_date": null,
+      "source_note": "Roco.world #494–496 and lkmerchant egg groups; six-column ordering crosschecked with #493 WIKI",
+      "source_game_id_confidence": "crosschecked URL"
+    },
+    {
+      "id": 496,
+      "name": "铃兰夫人",
+      "filename": "496-铃兰夫人.png",
+      "egg_data": {
+        "egg_groups": [
+          "植物组",
+          "拟人组"
+        ],
+        "height_min": null,
+        "height_max": null,
+        "weight_min": null,
+        "weight_max": null,
+        "giant_weight_line": null,
+        "tiny_weight_line": null
+      },
+      "evolution_chain": [
+        "呆呆铃",
+        "跳跳铃",
+        "铃兰夫人"
+      ],
+      "forms": [
+        {
+          "id": 496,
+          "name": "铃兰夫人",
+          "egg_groups": [
+            "植物组",
+            "拟人组"
+          ],
+          "height_min": 1.75,
+          "height_max": 2.6,
+          "weight_min": 50,
+          "weight_max": 70,
+          "giant_weight_line": null,
+          "tiny_weight_line": null,
+          "types": [
+            "萌",
+            "草"
+          ],
+          "stats": {
+            "sum": 548,
+            "stats": {
+              "hp": 136,
+              "speed": 60,
+              "atk": 46,
+              "def": 81,
+              "sp_atk": 110,
+              "sp_def": 115
+            }
+          }
+        }
+      ],
+      "types": [
+        "萌",
+        "草"
+      ],
+      "source_game_id": 3824,
+      "source_release_date": null,
+      "source_note": "Roco.world #494–496 and lkmerchant egg groups; six-column ordering crosschecked with #493 WIKI",
+      "source_game_id_confidence": "crosschecked URL"
+    }
+  ],
+  "game_id_to_name": {
+    "3822": "呆呆铃",
+    "3823": "跳跳铃",
+    "3824": "铃兰夫人"
+  }
+}

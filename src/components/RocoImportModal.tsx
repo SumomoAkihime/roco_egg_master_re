@@ -18,6 +18,10 @@ import {
   ChevronRight
 } from "lucide-react";
 import { ParentPet, cleanNature, STATS_OPTIONS } from "../types";
+import { decodePetMutation } from "../petMutation";
+import { parseBreedingGender } from "../petGender";
+import { resolvePetNameByConfig, catalogDexId, importedPetGid } from "../petImportIdentity";
+import { assignLocalBoxPositions, mapLocalBoxPositions } from "../localHelperApi";
 import {
   getPetDetails,
   getSpriteFileName,
@@ -200,6 +204,12 @@ interface ParsedPet {
   isNearTiny?: boolean;
   isNearVoice?: boolean;
   position?: string;
+  gameGid?: string;
+  isShiny?: boolean;
+  isColorful?: boolean;
+  mutationVerified?: boolean;
+  mutationConflict?: boolean;
+  catalogMatched?: boolean;
 }
 
 interface RocoImportModalProps {
@@ -215,17 +225,18 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
   existingParents,
   onImport
 }) => {
-  const [activeTab, setActiveTab] = useState<"sqlite" | "paste">("sqlite");
+  const [activeTab, setActiveTab] = useState<"sqlite" | "api" | "paste">("sqlite");
   const [importCurrentPage, setImportCurrentPage] = useState(1);
   const IMPORT_PAGE_SIZE = 50;
-  const [apiUrl, setApiUrl] = useState("http://127.0.0.1:4939/api/pets");
+  const [apiUsers, setApiUsers] = useState<Array<{ uid: string; name: string }>>([]);
+  const [apiUid, setApiUid] = useState("");
   const [jsonText, setJsonText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   
   // SQLite 专属状态
-  const [rocoUsers, setRocoUsers] = useState<Array<{ uid: number; name: string }>>([]);
+  const [rocoUsers, setRocoUsers] = useState<Array<{ uid: string; name: string }>>([]);
   const [selectedUid, setSelectedUid] = useState<string>("");
   const [isSqliteAvailable, setIsSqliteAvailable] = useState(false);
   
@@ -250,7 +261,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       try {
         const res = await window.electronAPI.getRocoUsers();
         if (res.success && res.data && res.data.length > 0) {
-          setRocoUsers(res.data);
+          setRocoUsers(res.data.map(u => ({ uid: String(u.uid), name: u.name })));
           setSelectedUid(String(res.data[0].uid));
           setIsSqliteAvailable(true);
           return true;
@@ -295,7 +306,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
           setIsLoading(false);
         });
       } else {
-        setActiveTab("sqlite");
+        setActiveTab("api");
       }
     }
   }, [isOpen]);
@@ -310,66 +321,39 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
   // 自适应字段猜测解析单只宠物
   const parseSinglePet = (item: any, index: number, existingSet: Set<string>): ParsedPet | null => {
     try {
-      // 1. 优先使用 conf_id 和 base_conf_id 在 gameIdToName 权威映射底表里高精度反查真实品种/形态全称 (免疫改名)
-      let rawName = "";
+      // base_conf_id 标识当前形态，conf_id 标识原始家族；优先识别当前形态。
+      // 不能拿游戏配置 ID 去匹配图鉴序号——两者不是同一个命名空间。
+      let rawName = resolvePetNameByConfig(item, gameIdToName as Record<string, string>) || "";
       const confIdVal = item.conf_id !== undefined ? parseInt(String(item.conf_id)) : null;
       const baseConfIdVal = item.base_conf_id !== undefined ? parseInt(String(item.base_conf_id)) : null;
-      const rawId = item.base_conf_id !== undefined ? item.base_conf_id : (item.pet_id !== undefined ? item.pet_id : (item.id !== undefined ? item.id : item.sprite_id));
-
-      if (confIdVal && (gameIdToName as any)[confIdVal]) {
-        rawName = (gameIdToName as any)[confIdVal];
-      } else if (baseConfIdVal && (gameIdToName as any)[baseConfIdVal]) {
-        rawName = (gameIdToName as any)[baseConfIdVal];
+      const rawId = baseConfIdVal ?? confIdVal ?? null;
+      const dexId = catalogDexId(item);
+      if (!rawName && dexId !== undefined) {
+        const foundPet = petsData.find((p: any) => p.id === dexId);
+        if (foundPet) rawName = foundPet.name;
       }
 
-      // 如果查映射表没查到，才尝试使用 ID 在本地 petsData 顺序 ID 中反查
-      if (!rawName) {
-        if (rawId !== undefined) {
-          const idNum = parseInt(String(rawId));
-          const foundPet = petsData.find((p: any) => p.id === idNum);
-          if (foundPet) {
-            rawName = foundPet.name;
-          } else {
-            // 查找 forms
-            for (const p of petsData) {
-              const f = p.forms.find((form: any) => form.id === idNum);
-              if (f) {
-                rawName = f.name;
-                break;
-              }
-            }
-          }
+      // PetData.name 可能是玩家自定义昵称，不能在有游戏配置 ID 但
+      // 当前映射尚未核实时，拿昵称冒充精灵物种名。
+      const hasConfigIds = item.base_conf_id !== undefined || item.conf_id !== undefined ||
+        item.baseConfId !== undefined || item.confId !== undefined;
+      const canonicalSpecies = [item.species, item.species_name, item.speciesName, item.sprite]
+        .find(value => typeof value === "string" && value.trim());
+      if (!rawName && typeof canonicalSpecies === "string") rawName = decodeBase64Name(canonicalSpecies);
+      if (!rawName && !hasConfigIds) {
+        const manualName = [item.pet_name, item.displayName, item.name]
+          .find(value => typeof value === "string" && value.trim());
+        if (typeof manualName === "string") rawName = decodeBase64Name(manualName);
+      }
+
+      // 当前形态标识应该来自被验证的配置映射或明确的物种/形态字段，
+      // 不得从玩家昵称里的括号文字猜测形态。
+      let rawOriginalName = rawName;
+      if (typeof canonicalSpecies === "string" && canonicalSpecies) {
+        const canonical = decodeBase64Name(canonicalSpecies);
+        if (canonical.includes("（") || canonical.includes("(") || canonical.includes("_")) {
+          rawOriginalName = canonical;
         }
-      }
-
-      // 如果通过 ID 没查到，再使用名字字段解码兜底
-      if (!rawName) {
-        if (typeof item.name === "string" && item.name) {
-          rawName = decodeBase64Name(item.name);
-        } else if (typeof item.sprite === "string" && item.sprite) {
-          rawName = decodeBase64Name(item.sprite);
-        } else if (typeof item.pet_name === "string" && item.pet_name) {
-          rawName = decodeBase64Name(item.pet_name);
-        } else if (typeof item.displayName === "string" && item.displayName) {
-          rawName = decodeBase64Name(item.displayName);
-        }
-      }
-
-      // 获取 item 中可能存在的带形态的原始名字
-      let rawOriginalName = "";
-      if (typeof item.name === "string" && item.name) {
-        rawOriginalName = decodeBase64Name(item.name);
-      } else if (typeof item.sprite === "string" && item.sprite) {
-        rawOriginalName = decodeBase64Name(item.sprite);
-      } else if (typeof item.pet_name === "string" && item.pet_name) {
-        rawOriginalName = decodeBase64Name(item.pet_name);
-      } else if (typeof item.displayName === "string" && item.displayName) {
-        rawOriginalName = decodeBase64Name(item.displayName);
-      }
-
-      // 如果反查出了带形态的品种名称，则直接用来作为 rawOriginalName 以提取形态后缀
-      if (rawName && (rawName.includes("（") || rawName.includes("("))) {
-        rawOriginalName = rawName;
       }
 
       // 提取原始名称中可能的形态信息 (如 "古钟蛇（本来的样子）" -> "本来的样子")
@@ -566,16 +550,11 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       const baseName = rawName.split("_")[0];
       const petDetails = getPetDetails(baseName);
       const groups = petDetails ? petDetails.groups : [];
+      const catalogMatched = !!petDetails;
 
-      // 2. 识别性别 (1=公, 2=母, 0=未知)
-      let gender: "♂" | "♀" = "♀"; // 默认母
-      const gVal = item.gender !== undefined ? item.gender : item.sex;
-      if (gVal !== undefined) {
-        const gStr = String(gVal).toLowerCase();
-        if (gStr === "1" || gStr === "male" || gStr === "m" || gStr.includes("公") || gStr.includes("雄") || gStr.includes("♂")) {
-          gender = "♂";
-        }
-      }
+      // 父母本仓库不接收性别未知/无性的个体；不能默认当成母体排窝。
+      const gender = parseBreedingGender(item.gender ?? item.sex);
+      if (!gender) return null;
 
       // 3. 识别性格
       let nature = "错性格";
@@ -739,8 +718,11 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
 
       // 8. 判定是否与本地已存在的数据完全重复 (使用 Set 实现 O(1) 匹配，避免 N*M 复杂度的 JSON.stringify 与 sort 重绘假死)
       const sortedStats = [...stats].sort().join(',');
+      const gameGid = importedPetGid(item);
       const key = `${rawName}|${gender}|${nature}|${brand}|${sortedStats}`;
-      const isDuplicate = existingSet.has(key);
+      const isDuplicate = gameGid ? existingSet.has(`gid:${gameGid}`) : existingSet.has(key);
+      // 基于 PetData.mutation_type 的明确位标志，异色与炫彩分开解析。
+      const mutation = decodePetMutation(item);
 
       return {
         uid: `parsed-${index}-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
@@ -755,7 +737,13 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         stats,
         groups,
         rawItem: item,
-        selected: !isDuplicate, // 重复的默认不勾选，不重复的默认勾选
+        gameGid,
+        isShiny: mutation.isShiny,
+        isColorful: mutation.isColorful,
+        mutationVerified: mutation.isShiny !== undefined && !mutation.hasConflict,
+        mutationConflict: mutation.hasConflict,
+        catalogMatched,
+        selected: !isDuplicate && catalogMatched, // 重复的默认不勾选，不重复的默认勾选
         isDuplicate,
         voice,
         isNearGiant,
@@ -779,9 +767,9 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
 
     // 提前构建去重特征 Set (优化百万次 N*M JSON.stringify 查重开销)
     const existingSet = new Set<string>(
-      existingParents.map(p => {
+      existingParents.flatMap(p => {
         const sortedStats = [...p.stats].sort().join(',');
-        return `${p.sprite}|${p.gender}|${p.nature}|${p.brand}|${sortedStats}`;
+        return [`${p.sprite}|${p.gender}|${p.nature}|${p.brand}|${sortedStats}`, ...(p.gameGid ? [`gid:${p.gameGid}`] : [])];
       })
     );
 
@@ -790,6 +778,17 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       const parsed = parseSinglePet(item, index, existingSet);
       if (parsed) {
         results.push(parsed);
+        // De-duplicate repeated pages/box snapshots in the CURRENT import batch
+        // as well as against previously saved parents. Two distinct GIDs with
+        // identical stats are still two separate pets.
+        if (!parsed.isDuplicate) {
+          if (parsed.gameGid) {
+            existingSet.add(`gid:${parsed.gameGid}`);
+          } else {
+            const statKey = [...parsed.stats].sort().join(",");
+            existingSet.add(`${parsed.sprite}|${parsed.gender}|${parsed.nature}|${parsed.brand}|${statKey}`);
+          }
+        }
       }
     });
 
@@ -797,7 +796,13 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
       setErrorMsg("未能解析出任何有效的精灵数据，请检查字段结构");
     } else {
       setParsedPets(results);
-      setSuccessMsg(`成功导入并解析出 ${results.length} 只精灵！`);
+      const skipped = list.length - results.length;
+      const confirmedShiny = results.filter(p => p.mutationVerified && p.isShiny).length;
+      const confirmedColorful = results.filter(p => p.mutationVerified && p.isColorful).length;
+      const conflicts = results.filter(p => p.mutationConflict).length;
+      const unknownMutation = results.filter(p => !p.mutationVerified && !p.mutationConflict).length;
+      const missingCatalog = results.filter(p => !p.catalogMatched).length;
+      setSuccessMsg(`可用于父母本管理的精灵 ${results.length} 只（异色 ${confirmedShiny}、炫彩 ${confirmedColorful}、外观字段冲突 ${conflicts}、外观待确认 ${unknownMutation}、缺少图鉴匹配 ${missingCatalog}）${skipped ? `；跳过 ${skipped} 只无性别或缺少有效种类资料的精灵` : ""}。`);
     }
   };
 
@@ -832,41 +837,69 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
     }
   };
 
-  // 2. 发起 API 请求
-  const handleApiFetch = async () => {
+  const getLocalApiJson = async (path: string): Promise<any> => {
+    const url = "http://127.0.0.1:4939" + path;
+    if (window.electronAPI?.httpGet) {
+      const response = await window.electronAPI.httpGet(url);
+      if (!response.success) throw new Error(response.error || "本地助手请求失败");
+      return response.data;
+    }
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    return await response.json();
+  };
+
+  const loadApiUsers = async () => {
+    setIsLoading(true);
+    setErrorMsg("");
+    try {
+      const raw = await getLocalApiJson("/api/users");
+      if (!Array.isArray(raw)) throw new Error("助手 /api/users 返回格式不符合预期");
+      const users = raw.filter(u => u && u.uid !== undefined).map(u => ({
+        uid: String(u.uid), name: String(u.name || "未命名角色")
+      }));
+      setApiUsers(users);
+      setApiUid(users[0]?.uid || "");
+      if (!users.length) setErrorMsg("助手未发现已登录角色，请确认游戏流量已经被抓取。");
+    } catch (error: any) {
+      setErrorMsg("连接本地助手失败：" + error.message);
+      setApiUsers([]);
+      setApiUid("");
+    } finally { setIsLoading(false); }
+  };
+
+  const handleLocalApiFetch = async () => {
+    if (!/^\\d+$/.test(apiUid)) {
+      setErrorMsg("请先读取助手账号列表并选择角色。");
+      return;
+    }
     setIsLoading(true);
     setErrorMsg("");
     setSuccessMsg("");
-    setConnStatus('fetching');
-
+    setConnStatus("fetching");
     try {
-      if (window.electronAPI && window.electronAPI.httpGet) {
-        // Electron 桌面环境下，使用主进程代理转发，绕过 CORS
-        const res = await window.electronAPI.httpGet(apiUrl);
-        if (res.success) {
-          setConnStatus('success');
-          const raw = res.data;
-          const list = Array.isArray(raw) ? raw : (raw.pets || raw.data || raw.list || []);
-          handleRawDataList(list);
-        } else {
-          setConnStatus('error');
-          setErrorMsg(res.error || "请求失败，请确保洛克王国世界助手正在后台运行且端口正确");
-        }
-      } else {
-        // 普通网页端，降级直接 Fetch
-        const res = await fetch(apiUrl);
-        if (!res.ok) throw new Error(`HTTP 错误: ${res.status}`);
-        const raw = await res.json();
-        setConnStatus('success');
-        const list = Array.isArray(raw) ? raw : (raw.pets || raw.data || raw.list || []);
-        handleRawDataList(list);
+      const encodedUid = encodeURIComponent(apiUid);
+      const pets = await getLocalApiJson("/api/pet-info?uid=" + encodedUid);
+      if (!Array.isArray(pets)) throw new Error("助手 /api/pet-info 未返回宠物数组");
+      if (!pets.length) throw new Error("当前角色尚无宠物快照，请在游戏中打开仓库后重试");
+      let positions = new Map<string, string>();
+      let boxWarning = "";
+      try {
+        const boxes = await getLocalApiJson("/api/box-info?uid=" + encodedUid);
+        positions = mapLocalBoxPositions(boxes);
+      } catch (error: any) {
+        boxWarning = "；仓库位置尚未读取：" + error.message;
       }
-    } catch (err: any) {
-      setConnStatus('error');
-      setErrorMsg(`连接助手接口失败: ${err.message}。您可以切换至“文本粘贴”标签，直接粘贴宠物 JSON。`);
-    } finally {
-      setIsLoading(false);
-    }
+      const list = assignLocalBoxPositions(pets, positions);
+      handleRawDataList(list);
+      const sexUnknown = list.filter((p: any) => !parseBreedingGender(p.gender ?? p.sex)).length;
+      const shinies = list.filter((p: any) => decodePetMutation(p).isShiny === true).length;
+      setSuccessMsg(`本地助手读取 ${list.length} 只宠物、${positions.size} 个仓库格位，确认异色 ${shinies} 只${sexUnknown ? `；其中 ${sexUnknown} 只性别未知或不可配对，将跳过父母本导入` : ""}${boxWarning}。请核对特殊形态及异色标记。`);
+      setConnStatus("success");
+    } catch (error: any) {
+      setConnStatus("error");
+      setErrorMsg("读取本地助手仓库失败：" + error.message);
+    } finally { setIsLoading(false); }
   };
 
   // 3. 解析手动粘贴的 JSON 文本
@@ -1009,7 +1042,12 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
         groups: p.groups,
         checked: false,
         voice: p.voice,
-        position: p.position
+        position: p.position,
+        gameGid: p.gameGid,
+        isShiny: p.isShiny,
+        isColorful: p.isColorful,
+        mutationVerified: p.mutationVerified,
+        shinySource: p.mutationVerified ? "packet" : undefined
       };
     });
 
@@ -1038,7 +1076,7 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
             </div>
             <div>
               <h3 className="text-base font-bold text-slate-800 dark:text-slate-100">导入《洛克王国：世界》精灵盒子</h3>
-              <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">免网卡抓包，一键同步本地盒子精灵父母本</p>
+              <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">支持本机助手 API 或 SQLite 读取，导入前请核对精灵信息</p>
             </div>
           </div>
           <button
@@ -1065,6 +1103,12 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
                 本地数据库直连
               </button>
             )}
+            <button
+              onClick={() => { setActiveTab("api"); setErrorMsg(""); setSuccessMsg(""); if (!apiUsers.length) void loadApiUsers(); }}
+              className={`px-3.5 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${activeTab === "api" ? "bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-xs" : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"}`}
+            >
+              <RefreshCw className="w-3.5 h-3.5" /> 助手 API 直连
+            </button>
             <button
               onClick={() => { setActiveTab("paste"); setErrorMsg(""); setSuccessMsg(""); }}
               className={`px-3.5 py-1.5 rounded-md text-xs font-bold transition-all cursor-pointer ${
@@ -1119,6 +1163,15 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
               </div>
             )}
 
+            {activeTab === "api" && (
+              <div className="flex items-center justify-end gap-2 w-full">
+                <button onClick={loadApiUsers} disabled={isLoading} className="px-3 py-2 border border-indigo-200 dark:border-indigo-700 rounded-lg text-xs cursor-pointer disabled:opacity-50">刷新角色</button>
+                <select aria-label="本地助手角色" value={apiUid} onChange={e => setApiUid(e.target.value)} className="min-w-0 flex-1 max-w-52 p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent text-xs">
+                  {apiUsers.map(u => <option key={u.uid} value={u.uid}>{u.name}（{u.uid}）</option>)}
+                </select>
+                <button onClick={handleLocalApiFetch} disabled={isLoading || !apiUid} className="px-3 py-2 rounded-lg bg-indigo-600 text-white font-bold text-xs disabled:opacity-50 cursor-pointer">读取仓库</button>
+              </div>
+            )}
             {activeTab === "paste" && (
               <div className="flex items-center gap-2 w-full justify-end">
                 <button
@@ -1328,6 +1381,11 @@ export const RocoImportModal: React.FC<RocoImportModalProps> = ({
                                   )}
                                 </div>
                                 <span className="truncate" title={pet.sprite}>{pet.sprite}</span>
+                                {!pet.catalogMatched && <span title="当前 S5 图鉴缺少对应名称/形态；默认不选中以避免错误配对" className="text-[9px] font-bold text-rose-500 whitespace-nowrap">图鉴待匹配</span>}
+                                {pet.isShiny && <span className="text-[9px] text-amber-600 font-bold whitespace-nowrap">✨异色</span>}
+                                {pet.isColorful && <span className="text-[9px] text-violet-500 font-bold whitespace-nowrap">炫彩</span>}
+                                {pet.mutationConflict && <span title="抓包外观字段不一致，请人工核对" className="text-[9px] text-red-500 whitespace-nowrap">字段冲突</span>}
+                                {!pet.mutationVerified && !pet.mutationConflict && <span title="封包未提供明确异色标志" className="text-[9px] text-slate-400 whitespace-nowrap">外观待确认</span>}
                               </div>
                             </td>
 

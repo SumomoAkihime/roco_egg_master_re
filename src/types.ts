@@ -39,6 +39,16 @@ export interface ParentPet {
   checked?: boolean;
   voice?: number | null;
   position?: string;
+  /** 已确认异色；未识别的抓包字段不应自动标记为真 */
+  isShiny?: boolean;
+  /** 炫彩与异色是独立状态，可能同时存在。 */
+  isColorful?: boolean;
+  /** 异色是否已由明确的抓包字段或人工判断；缺省表示待核实。 */
+  mutationVerified?: boolean;
+  /** 精灵实例 ID，避免以属性组合误判重复 */
+  gameGid?: string;
+  /** 异色来源：人工确认或明确协议字段 */
+  shinySource?: "manual" | "packet";
 }
 
 export interface EggData {
@@ -201,8 +211,8 @@ declare global {
       getDataPath: () => Promise<string>;
       selectSavePath: (currentData: any) => Promise<{ path: string; data: any } | null>;
       httpGet?: (url: string) => Promise<{ success: boolean; data?: any; error?: string; raw?: string }>;
-      getRocoUsers?: () => Promise<{ success: boolean; data?: Array<{ uid: number; name: string }>; error?: string }>;
-      getRocoPets?: (uid: string | number) => Promise<{ success: boolean; data?: Array<{ id: number; data: any }>; error?: string }>;
+      getRocoUsers?: () => Promise<{ success: boolean; data?: Array<{ uid: string; name: string }>; error?: string }>;
+      getRocoPets?: (uid: string | number) => Promise<{ success: boolean; data?: Array<{ id: string; data: any }>; error?: string }>;
       showMainWindow?: () => void;
       resizeFloatWindow?: (size: { width: number; height: number }) => void;
       dragFloatWindow?: (delta: { deltaX: number; deltaY: number }) => void;

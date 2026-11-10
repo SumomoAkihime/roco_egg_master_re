@@ -11,8 +11,12 @@
     "clean": "rm -rf dist server.js dist-electron",
     "lint": "tsc --noEmit",
     "electron:start": "electron .",
-    "electron:build": "npm run build && electron-builder",
-    "compress": "node compress-images.js"
+    "electron:build": "npm run build && electron-builder --win --x64 --publish never",
+    "compress": "node compress-images.js",
+    "test:shiny": "tsx --test tests/localHelperApi.test.ts tests/petGender.test.ts tests/petImportIdentity.test.ts tests/petMutation.test.ts tests/s5CatalogLookup.test.ts tests/shinyPlanner.test.ts",
+    "check:shiny": "npm run lint && npm run test:shiny",
+    "electron:build:dir": "npm run build && electron-builder --win --x64 --dir --publish never",
+    "test:portable": "node --test tests/portablePaths.test.cjs"
   },
   "dependencies": {
     "pinyin-pro": "^3.28.1"
@@ -54,7 +58,7 @@
     },
     "win": {
       "target": [
-        "portable"
+        "zip"
       ],
       "icon": "001.ico"
     },
@@ -66,6 +70,7 @@
     ],
     "asarUnpack": [
       "dist/images/**/*"
-    ]
+    ],
+    "artifactName": "RocoEggMaster-${version}-${os}-${arch}-portable.${ext}"
   }
 }
