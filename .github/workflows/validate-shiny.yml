@@ -11,6 +11,8 @@ on:
       - "package.json"
       - "package-lock.json"
       - ".github/workflows/validate-shiny.yml"
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -30,6 +32,8 @@ jobs:
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Type check
         run: npm run lint
+      - name: Portable paths and ignore rules
+        run: npm run test:portable
       - name: Unit tests
         run: npm run test:shiny
       - name: Validate catalog dry-run script
@@ -68,7 +72,11 @@ jobs:
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Windows type checking
         run: npm run lint
+      - name: Windows portable paths and ignore rules
+        run: npm run test:portable
       - name: Windows unit tests
         run: npm run test:shiny
       - name: Windows production Vite build
         run: npm run build
+      - name: Build Windows folder portable application
+        run: npx electron-builder --win --x64 --dir --publish never

@@ -2,6 +2,16 @@ const { app, BrowserWindow, ipcMain, dialog, Tray, Menu } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { exec, spawn } = require('child_process');
+const { configurePortablePaths } = require('./portable-paths.cjs');
+
+let portableRoot = null;
+try {
+  portableRoot = configurePortablePaths(app);
+} catch (err) {
+  dialog.showErrorBox('便携目录不可写', '请将全部程序文件解压到可写的新目录后重试。不会自动切换到旧版数据目录。\n' + err.message);
+  app.exit(1);
+  throw err;
+}
 
 let mainWindow;
 let floatWindow = null;
@@ -433,7 +443,7 @@ function getDataFilePath() {
 
   // 生产环境下（打包后的 exe 运行时）
   // 1. 优先使用 exe 同级目录
-  const exeDir = path.dirname(process.execPath);
+  const exeDir = portableRoot || path.dirname(process.execPath);
   const localFilePath = path.join(exeDir, 'roco_egg_data.json');
 
   try {
